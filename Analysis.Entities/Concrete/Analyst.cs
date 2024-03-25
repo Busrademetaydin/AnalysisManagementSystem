@@ -11,7 +11,7 @@ namespace Analysis.Entities.Concrete
         public string Phone { get; set; }
         public string IdentificationNumber { get; set; }
         public string Title { get; set; }
-        public string? Password { get; set; }
+
 
         public ICollection<Analyze> Analyzes { get; set; }
 

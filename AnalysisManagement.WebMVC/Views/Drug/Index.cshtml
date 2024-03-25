@@ -1,0 +1,38 @@
+﻿@using Analysis.Entities.Concrete
+
+@model IEnumerable<Drug>
+
+<table class="table table-active">   
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(p => p.Id)</th>
+            <th>@Html.DisplayNameFor(p => p.ProductCode)</th>
+            <th>@Html.DisplayNameFor(p => p.BatchNo)</th>
+            <th>@Html.DisplayNameFor(p => p.DosageForm)</th>
+            <th>@Html.DisplayNameFor(p => p.Description)</th>
+            <th>@Html.DisplayNameFor(p => p.MFGDate)</th>
+            <th>@Html.DisplayNameFor(p => p.EXPDate)</th>
+            <th>@Html.DisplayNameFor(p => p.StorageCondition)</th>
+            
+        </tr>
+        </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(p => item.Id)</td>
+                //<td>@item.Id</td>
+                <td>@Html.DisplayFor(p => item.ProductCode)</td>
+                <td>@Html.DisplayFor(p => item.BatchNo)</td>
+                <td>@Html.DisplayFor(p => item.DosageForm)</td>
+                <td>@Html.DisplayFor(p => item.Description)</td>
+                <td>@Html.DisplayFor(p => item.MFGDate)</td>
+                <td>@Html.DisplayFor(p => item.EXPDate)</td>
+                <td>@Html.DisplayFor(p => item.StorageCondition)</td>
+                
+            </tr>
+        }
+    </tbody>
+
+</table>

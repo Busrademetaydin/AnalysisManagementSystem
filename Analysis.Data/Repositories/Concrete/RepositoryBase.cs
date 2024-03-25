@@ -10,6 +10,7 @@ namespace Analysis.Data.Repositories.Concrete
     {
         public readonly TContext db;
 
+
         public RepositoryBase()
         {
             db = new TContext();
@@ -53,12 +54,23 @@ namespace Analysis.Data.Repositories.Concrete
 
         }
 
-        public async Task<T?> Get(Expression<Func<T, bool>> expression)
+        public async Task<T?> Get(Expression<Func<T, bool>>? expression)
         {
-            return await db.Set<T>().FindAsync(expression);
+            if (expression != null)
+            {
+                return await db.Set<T>().FirstOrDefaultAsync(expression);
+            }
+            else
+            {
+                return default(T); // or null depending on your logic
+            }
         }
         public async Task<T> GetById(TId id)
         {
+            if (id == null)
+            {
+                return null;
+            }
             return await db.Set<T>().FindAsync(id);
         }
         public async Task<ICollection<T>?> GetAll(Expression<Func<T, bool>>? expression = null)
@@ -84,7 +96,7 @@ namespace Analysis.Data.Repositories.Concrete
                 query = db.Set<T>();
             }
 
-            return include.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return include.Aggregate(query, (current, include) => current.Include(include));
         }
     }
 }

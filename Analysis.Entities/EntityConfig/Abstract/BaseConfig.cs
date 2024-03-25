@@ -13,5 +13,6 @@ namespace Analysis.Entities.EntityConfig.Abstract
             builder.Property(p => p.UpdateDate).HasDefaultValueSql("GetDate()");
 
         }
+
     }
 }

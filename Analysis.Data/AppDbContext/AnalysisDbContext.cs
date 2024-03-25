@@ -21,11 +21,13 @@ namespace Analysis.Data.AppDbContext
 
         public DbSet<AnalyzeDetail> AnalyzeDetails { get; set; }
 
+        public DbSet<Role> Role { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=AnalysisManagement;Trusted_Connection=true;Trust server Certificate=true");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=AnalysisManagement;Trusted_Connection=true;Trust server Certificate=true;MultipleActiveResultSets=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

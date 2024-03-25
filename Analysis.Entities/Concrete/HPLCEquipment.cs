@@ -10,5 +10,7 @@ namespace Analysis.Entities.Concrete
         public DateTime CalibrationDueDate { get; set; }
 
         public ICollection<Analyze> Analyzes { get; set; }
+
+
     }
 }

@@ -16,8 +16,8 @@ namespace Analysis.Entities.EntityConfig.Concrete
             builder.Property(p => p.Title).HasMaxLength(50);
             builder.Property(p => p.Email).HasMaxLength(50);
             builder.HasIndex(p => p.Email).IsUnique();
-            builder.Property(p => p.Password).HasMaxLength(10);
             builder.Property(p => p.Phone).HasMaxLength(20);
+            builder.HasIndex(p => p.Phone).IsUnique();
         }
 
     }
