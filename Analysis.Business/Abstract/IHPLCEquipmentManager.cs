@@ -6,5 +6,7 @@ namespace Analysis.Business.Abstract
     {
         public bool IsCalibrationValid(DateTime CalibrationDueDate);
 
+        public bool CheckSerialNumber(string serialNumber);
+
     }
 }

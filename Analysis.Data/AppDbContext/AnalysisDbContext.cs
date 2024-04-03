@@ -21,6 +21,8 @@ namespace Analysis.Data.AppDbContext
 
         public DbSet<AnalyzeDetail> AnalyzeDetails { get; set; }
 
+        public DbSet<AnalyzeType> AnalyzeTypes { get; set; }
+
         public DbSet<Role> Role { get; set; }
 
 

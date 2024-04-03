@@ -1,6 +1,5 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Business.Concrete;
-using Analysis.Data.AppDbContext;
 using Analysis.Entities.Concrete;
 
 namespace Analysis.Test
@@ -17,11 +16,8 @@ namespace Analysis.Test
 
 
 
-            //// Bir cihaz örneği oluştur
             //HPLCEquipment equipment = new HPLCEquipment();
 
-
-            //// Cihazın kalibrasyon geçerlilik tarihini ayarla
             //equipment.CalibrationDueDate = new DateTime(2024, 3, 15); // Örnek olarak 15 Mart 2024
 
             //// Analiz yapmadan önce cihazın kalibrasyon geçerliliğini kontrol et
@@ -31,46 +27,72 @@ namespace Analysis.Test
             //// Analiz yapılabilir mi yoksa yapılamaz mı kontrol et
             //if (CanPerformAnalysis)
             //{
-            //    // Analiz yapma işlemini burada gerçekleştir
-            //    Console.WriteLine("Analiz yapılıyor...");
+            //   
+            //    Console.WriteLine("Analiz için hazırlıklar tamam.");
             //}
             //else
             //{
-            //    // Analiz yapma işlemi reddedildi
-            //    Console.WriteLine("Analiz yapılamadı.");
+
+            //    Console.WriteLine("Analiz yapılamaz.");
 
             //}
 
-            var dbContext = new AnalysisDbContext(); // DbContext nesnesini oluşturun
+            //var dbContext = new AnalysisDbContext();
 
-            IDrugManager drugManager = new DrugManager();
+            //IDrugManager drugManager = new DrugManager();
+
+            //var newDrug = new Drug
+            //{
+            //    ProductCode = "P03",
+            //    BatchNo = "241001001",
+            //    Description = "Paracetamol 500 mg",
+            //    StorageCondition = "Refrigerator",
+            //    DosageForm = "Tablet",
+            //    MFGDate = new DateTime(2024, 2, 12),
+            //    EXPDate = new DateTime(2026, 2, 11)
 
 
-            // Yeni ilaç oluşturun
-            var newDrug = new Drug
+            //};
+
+            //try
+            //{
+            //    var result = drugManager.Insert(newDrug).Result;
+            //    Console.WriteLine("İlaç başarıyla eklendi.");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Hata: {ex.Message}");
+            //}
+
+            //IHPLCEquipmentManager equipmentManager = new HPLCEquipmentManager();
+            //var equipment = new HPLCEquipment
+            //{ Brand = "Waters", CalibrationDueDate = new DateTime(2024, 05, 06), SerialNumber = "U145502" };
+
+
+            //try
+            //{
+            //    var result = equipmentManager.Insert(equipment).Result;
+            //    Console.WriteLine("Ekipman bilgileri başarılı bir şekilde kaydedildi.");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Hata: {ex.Message}");
+            //}
+
+
+            IAnalystManager analystManager = new AnalystManager();
+
+            var analyst = new Analyst
             {
-                ProductCode = "P03",
-                BatchNo = "202401001",
-                StorageCondition = "Refrigerator",
-                DosageForm = "Capsule",
-                MFGDate = new DateTime(2024, 2, 12),
-                EXPDate = new DateTime(2026, 2, 11)
+                FirstName = "Büşra",
+                LastName = "Demet Aydın",
+                Gender = true,
+                IdentificationNumber = "12312312312",
+                Email = "busrademet@tobiopharma.com",
+                Phone = "536589652300",
+                Title = "Uzman"
 
-
-                // Diğer ilaç özellikleri...
             };
-
-            try
-            {
-                // İlaç ekleme işlemini gerçekleştirin
-                var result = drugManager.Insert(newDrug).Result;
-                Console.WriteLine("İlaç başarıyla eklendi.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Hata: {ex.Message}");
-            }
-
         }
     }
 }

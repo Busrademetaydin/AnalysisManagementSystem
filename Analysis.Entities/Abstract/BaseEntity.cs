@@ -1,6 +1,6 @@
 ﻿namespace Analysis.Entities.Abstract
 {
-    public abstract class BaseEntity<TId>
+    public class BaseEntity<TId>
     {
         public TId Id { get; set; }
 

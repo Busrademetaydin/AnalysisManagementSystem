@@ -19,7 +19,7 @@ namespace Analysis.Business.Concrete
             var existingDrug = _repository.Get(d => d.ProductCode == productCode).Result;
             return existingDrug != null;
         }
-        public override async Task<int> Insert(Drug entity)
+        public override async Task<int> InsertAsync(Drug entity)
         {
             // Aynı ürün koduna sahip ilaç varsa hata döndür
             if (CheckProductCode(entity.ProductCode))
@@ -34,7 +34,7 @@ namespace Analysis.Business.Concrete
             }
 
             // Kontrollerden geçtiyse ilacı ekleyerek sonucu döndür
-            return await base.Insert(entity);
+            return await base.InsertAsync(entity);
         }
     }
 }

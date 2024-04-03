@@ -16,7 +16,7 @@ namespace Analysis.Data.Repositories.Concrete
             db = new TContext();
         }
 
-        public async Task<int> Insert(T entity)
+        public async Task<int> InsertAsync(T entity)
         {
             int sonuc = 0;
             try
@@ -33,24 +33,25 @@ namespace Analysis.Data.Repositories.Concrete
             return sonuc;
         }
 
-        public async Task<int> Update(T entity)
+        public async Task<int> UpdateAsync(T entity)
         {
             db.Set<T>().Update(entity);
             return await db.SaveChangesAsync();
+
         }
 
 
-        public async Task<int> Delete(T entity)
+        public async Task<int> DeleteAsync(T entity)
         {
             db.Set<T>().Remove(entity);
             return await db.SaveChangesAsync();
         }
 
-        public async Task<int> Delete(TId id)
+        public async Task<int> DeleteAsync(TId id)
         {
             var result = await db.Set<T>().FindAsync(id);
 
-            return await Delete(result);
+            return await DeleteAsync(result);
 
         }
 
@@ -62,10 +63,10 @@ namespace Analysis.Data.Repositories.Concrete
             }
             else
             {
-                return default(T); // or null depending on your logic
+                return default(T);
             }
         }
-        public async Task<T> GetById(TId id)
+        public async Task<T> GetByIdAsync(TId id)
         {
             if (id == null)
             {
@@ -73,11 +74,11 @@ namespace Analysis.Data.Repositories.Concrete
             }
             return await db.Set<T>().FindAsync(id);
         }
-        public async Task<ICollection<T>?> GetAll(Expression<Func<T, bool>>? expression = null)
+        public async Task<ICollection<T>?> GetAllAsync(Expression<Func<T, bool>>? predicate)
         {
-            if (expression != null)
+            if (predicate != null)
             {
-                return await db.Set<T>().Where(expression).ToListAsync();
+                return await db.Set<T>().Where(predicate).ToListAsync();
             }
             else
             {

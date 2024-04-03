@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Analysis.Data.Migrations
 {
     [DbContext(typeof(AnalysisDbContext))]
-    [Migration("20240311215353_Mig_AddRole")]
-    partial class Mig_AddRole
+    [Migration("20240328145538_InıtDb")]
+    partial class InıtDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,6 +106,9 @@ namespace Analysis.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("AnalyzeTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -132,6 +135,8 @@ namespace Analysis.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnalystId");
+
+                    b.HasIndex("AnalyzeTypeId");
 
                     b.HasIndex("EquipmentId");
 
@@ -181,6 +186,41 @@ namespace Analysis.Data.Migrations
                     b.HasIndex("DrugId");
 
                     b.ToTable("AnalyzeDetails");
+                });
+
+            modelBuilder.Entity("Analysis.Entities.Concrete.AnalyzeType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnalyzeTypes");
                 });
 
             modelBuilder.Entity("Analysis.Entities.Concrete.Drug", b =>
@@ -364,16 +404,6 @@ namespace Analysis.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "123456**",
-                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserName = "Analyst"
-                        });
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -399,6 +429,12 @@ namespace Analysis.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Analysis.Entities.Concrete.AnalyzeType", "AnalyzeType")
+                        .WithMany("Analyzes")
+                        .HasForeignKey("AnalyzeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Analysis.Entities.Concrete.HPLCEquipment", "Equipment")
                         .WithMany("Analyzes")
                         .HasForeignKey("EquipmentId")
@@ -406,6 +442,8 @@ namespace Analysis.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Analyst");
+
+                    b.Navigation("AnalyzeType");
 
                     b.Navigation("Equipment");
                 });
@@ -452,6 +490,11 @@ namespace Analysis.Data.Migrations
             modelBuilder.Entity("Analysis.Entities.Concrete.Analyze", b =>
                 {
                     b.Navigation("AnalyzeDetails");
+                });
+
+            modelBuilder.Entity("Analysis.Entities.Concrete.AnalyzeType", b =>
+                {
+                    b.Navigation("Analyzes");
                 });
 
             modelBuilder.Entity("Analysis.Entities.Concrete.Drug", b =>

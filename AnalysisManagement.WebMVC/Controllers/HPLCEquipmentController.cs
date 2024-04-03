@@ -13,7 +13,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var result = await manager.GetAll();
+            var result = await manager.GetAllAsync();
 
             return View();
         }

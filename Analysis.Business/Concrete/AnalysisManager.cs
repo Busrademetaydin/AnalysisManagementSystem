@@ -6,10 +6,6 @@ namespace Analysis.Business.Concrete
 {
     public class AnalysisManager : ManagerBase<Analyze, int, AnalysisDbContext>, IAnalysisManager
     {
-        public override Task<int> Insert(Analyze entity)
-        {
-            return base.Insert(entity);
-        }
         public bool CanPerformAnalysis(HPLCEquipment equipment)
         {
 
@@ -27,6 +23,11 @@ namespace Analysis.Business.Concrete
             return false;
 
 
+        }
+
+        public override Task<int> InsertAsync(Analyze entity)
+        {
+            return base.InsertAsync(entity);
         }
 
 

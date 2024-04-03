@@ -10,9 +10,23 @@ namespace Analysis.Business.Concrete
         {
             return CalibrationDueDate >= DateTime.Today;
         }
+        public bool CheckSerialNumber(string serialNumber)
+        {
+            // Aynı seri noya sahip cihaz var mı kontrol ediyoruz
+            var existingEquipment = _repository.Get(d => d.SerialNumber == serialNumber).Result;
+            return existingEquipment != null;
+        }
 
+        public override async Task<int> InsertAsync(HPLCEquipment entity)
+        {
+            // Aynı seri noya sahip cihaz varsa hata döndür
+            if (CheckSerialNumber(entity.SerialNumber))
+            {
+                throw new Exception("Aynı seri numarasına sahip başka bir cihaz mevcut.");
+            }
 
-
-
+            return await base.InsertAsync(entity);
+        }
     }
 }
+

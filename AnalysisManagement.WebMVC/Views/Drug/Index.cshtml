@@ -2,6 +2,7 @@
 
 @model IEnumerable<Drug>
 
+<a asp-action="Insert" class="btn btn-primary mb-3">Insert a new drug</a>
 <table class="table table-active">   
     <thead>
         <tr>
@@ -12,8 +13,7 @@
             <th>@Html.DisplayNameFor(p => p.Description)</th>
             <th>@Html.DisplayNameFor(p => p.MFGDate)</th>
             <th>@Html.DisplayNameFor(p => p.EXPDate)</th>
-            <th>@Html.DisplayNameFor(p => p.StorageCondition)</th>
-            
+            <th>@Html.DisplayNameFor(p => p.StorageCondition)</th> 
         </tr>
         </thead>
     <tbody>
@@ -21,16 +21,14 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(p => item.Id)</td>
-                //<td>@item.Id</td>
-                <td>@Html.DisplayFor(p => item.ProductCode)</td>
-                <td>@Html.DisplayFor(p => item.BatchNo)</td>
-                <td>@Html.DisplayFor(p => item.DosageForm)</td>
-                <td>@Html.DisplayFor(p => item.Description)</td>
-                <td>@Html.DisplayFor(p => item.MFGDate)</td>
-                <td>@Html.DisplayFor(p => item.EXPDate)</td>
-                <td>@Html.DisplayFor(p => item.StorageCondition)</td>
-                
+                <td>@item.Id</td>
+                <td>@item.ProductCode</td>
+                <td>@item.BatchNo</td>
+                <td>@item.DosageForm</td>
+                <td>@item.Description</td>
+                <td>@item.MFGDate</td>
+                <td>@item.EXPDate</td>
+                <td>@item.StorageCondition</td>
             </tr>
         }
     </tbody>

@@ -6,6 +6,8 @@ namespace Analysis.Business.Abstract
     {
         //Aynı koda sahip ilaç olmasın.
         public bool CheckProductCode(string productCode);
+
+        //Aynı seri noya sahip ilaç olamaz
         public bool CheckBatchNo(string batchNo);
     }
 }

@@ -5,14 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
-    public class DrugController : Controller
+    public class AnalysisController : Controller
     {
-        private readonly IDrugManager manager;
+        private readonly IAnalysisManager manager;
 
-        public DrugController(IDrugManager manager)
+        public AnalysisController(IAnalysisManager manager)
+
         {
             this.manager = manager;
         }
+
         public IActionResult Index()
         {
             var result = manager.GetAllAsync().Result;
@@ -21,32 +23,30 @@ namespace AnalysisManagement.WebMVC.Controllers
 
         public async Task<IActionResult> InsertAsync()
         {
-            DrugInsertVM insertVM = new DrugInsertVM();
+            AnalyzeInsertVM insertVM = new();
             return View(insertVM);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> InsertAsync(DrugInsertVM drug)
+        public async Task<IActionResult> InsertAsync(AnalyzeInsertVM analyze)
         {
             if (ModelState.IsValid)
             {
-                Drug drug1 = new Drug()
+                Analyze analysis = new Analyze()
                 {
-                    Id = drug.DrugId,
-                    ProductCode = drug.ProductCode,
-                    BatchNo = drug.BatchNo,
-                    DosageForm = drug.DosageForm,
-                    Description = drug.Description,
-                    MFGDate = drug.MFGDate,
-                    EXPDate = drug.EXPDate,
-                    StorageCondition = drug.StorageCondition
+                    Id = analyze.AnalyzeId,
+
+                    AnalyzeTypeId = analyze.AnalyzeTypeId,
+                    AnalystId = analyze.AnalystId,
+                    EquipmentId = analyze.EquipmentId
 
 
                 };
 
                 try
                 {
-                    await manager.InsertAsync(drug1);
+                    await manager.InsertAsync(analysis);
                 }
                 catch (Exception ex)
                 {
@@ -56,7 +56,7 @@ namespace AnalysisManagement.WebMVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(drug);
+            return View(analyze);
         }
 
     }

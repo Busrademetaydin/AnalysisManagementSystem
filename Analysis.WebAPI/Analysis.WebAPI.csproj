@@ -16,4 +16,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AnalysisManagement.WebMVC\AnalysisManagement.WebMVC.csproj" />
+  </ItemGroup>
+
 </Project>

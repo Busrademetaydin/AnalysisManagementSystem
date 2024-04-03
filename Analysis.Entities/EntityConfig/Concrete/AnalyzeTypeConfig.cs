@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Analysis.Entities.EntityConfig.Concrete
 {
-    public class AnalyzeConfig : BaseConfig<Analyze, int>
+    public class AnalyzeTypeConfig : BaseConfig<AnalyzeType, int>
     {
-        public override void Configure(EntityTypeBuilder<Analyze> builder)
+        public override void Configure(EntityTypeBuilder<AnalyzeType> builder)
         {
             base.Configure(builder);
             builder.Property(p => p.Description).HasMaxLength(200);
-            builder.Property(p => p.StartDate).IsRequired();
-            builder.Property(p => p.EndDate).IsRequired();
+            builder.Property(p => p.Name).IsRequired().HasMaxLength(30);
+            builder.Property(p => p.Active).IsRequired();
+
 
         }
     }

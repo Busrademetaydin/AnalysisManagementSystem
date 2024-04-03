@@ -1,22 +1,73 @@
 ﻿@using Analysis.Entities.Concrete
-@model Drug
+@model DrugInsertVM
 
 <div class="card">
     <div class="card-header">
-    <h3>Insert a drug</h3>
+    <h3>Create a new product</h3>
+        
     </div>
 <div class="card-body">
 
     <form action="Insert" method="post">
-        <div class="mb-3">
-            <label>Enter User name</label><br>
-            <input type="text" name="firstname"><br>
-            <label>Enter Password</label><br>
-            <input type="Password" name="password"><br>
-            <br><input type="submit" value="submit">
+            <div asp-validation-summary="All"></div>
+            <div class="mb-3">
+            <label asp-for="ProductCode" class="form-label">Product Code</label>
+                <input asp-for="ProductCode" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="ProductCode"></span></div>
+               
         </div>
-   
+            
+        <div class="mb-3">
+                <label asp-for="BatchNo" class="form-label">Batch No</label>
+                <input asp-for="BatchNo" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="BatchNo"></span></div>
 
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DosageForm" class="form-label">Dosage Form</label>
+                <input asp-for="DosageForm" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="DosageForm"></span></div>
+
+            </div>
+       @*  <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <input asp-for="Description" class="form-control">
+            </div> *@
+        <div class="mb-3">
+                <label asp-for="MFGDate" class="form-label">Manufacturing Date</label>
+                <input asp-for="MFGDate" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="MFGDate"></span></div>
+         </div>
+         <div class="mb-3">
+                <label asp-for="EXPDate" class="form-label">Expiration Date</label>
+                <input asp-for="EXPDate" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="EXPDate"></span></div>
+         </div>
+       
+
+         <div class="mb-3">
+                <label asp-for="StorageCondition" class="form-label">Storage Condition</label>
+                <input asp-for="StorageCondition" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="StorageCondition"></span></div>
+         </div>
+        <div class="mb-3">
+                <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </form>
     </div>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+

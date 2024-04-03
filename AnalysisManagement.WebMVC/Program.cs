@@ -20,6 +20,8 @@ namespace AnalysisManagement.WebMVC
             builder.Services.AddScoped<IHPLCEquipmentManager, HPLCEquipmentManager>();
             builder.Services.AddScoped<IDrugManager, DrugManager>();
             builder.Services.AddScoped<IAnalysisManager, AnalysisManager>();
+            builder.Services.AddScoped<IAnalystManager, AnalystManager>();
+            builder.Services.AddScoped<IAnalyzeDetailManager, AnalyzeDetailManager>();
 
 
             var app = builder.Build();
@@ -48,7 +50,7 @@ namespace AnalysisManagement.WebMVC
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Drug}/{action=Index}/{id?}");
+                    pattern: "{controller=Analysis}/{action=Index}/{id?}");
             });
 
 
