@@ -1,9 +1,12 @@
-﻿@using Analysis.Entities.Concrete
+﻿@model IEnumerable<Drug>
 
-@model IEnumerable<Drug>
+@{
+    ViewData["Title"] = "Index";
+}
 
+    <h3>Drugs</h3>
 <a asp-action="Insert" class="btn btn-primary mb-3">Insert a new drug</a>
-<table class="table table-active">   
+<table class="table table-active id="sidebar-overlay">   
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(p => p.Id)</th>
@@ -13,7 +16,8 @@
             <th>@Html.DisplayNameFor(p => p.Description)</th>
             <th>@Html.DisplayNameFor(p => p.MFGDate)</th>
             <th>@Html.DisplayNameFor(p => p.EXPDate)</th>
-            <th>@Html.DisplayNameFor(p => p.StorageCondition)</th> 
+            <th>@Html.DisplayNameFor(p => p.StorageCondition)</th>
+            <th></th>
         </tr>
         </thead>
     <tbody>
@@ -29,6 +33,11 @@
                 <td>@item.MFGDate</td>
                 <td>@item.EXPDate</td>
                 <td>@item.StorageCondition</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

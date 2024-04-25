@@ -1,18 +1,14 @@
-﻿using Analysis.Business.Abstract;
-using Analysis.Business.Concrete;
-using Analysis.Entities.Concrete;
-
-namespace Analysis.Test
+﻿namespace Analysis.Test
 {
     internal class Program
     {
         static async Task Main(string[] args)
         {
 
-            ////    RepositoryBase<Analyst, int, AnalysisDbContext> dbContext = new();
+            //RepositoryBase<Analyst, int, AnalysisDbContext> dbContext = new();
 
-            ////    var result = await dbContext.GetAll(null);
-            ////    result.ToList().ForEach(x => { Console.WriteLine(x.FirstName + " " + x.LastName); });
+            //var result = await dbContext.GetAllAsync(null);
+            //result.ToList().ForEach(x => { Console.WriteLine(x.FirstName + " " + x.LastName); });
 
 
 
@@ -24,10 +20,10 @@ namespace Analysis.Test
             //AnalysisManager manager = new AnalysisManager();
             //bool CanPerformAnalysis = manager.CanPerformAnalysis(equipment);
 
-            //// Analiz yapılabilir mi yoksa yapılamaz mı kontrol et
+            // Analiz yapılabilir mi yoksa yapılamaz mı kontrol et
             //if (CanPerformAnalysis)
             //{
-            //   
+
             //    Console.WriteLine("Analiz için hazırlıklar tamam.");
             //}
             //else
@@ -56,7 +52,7 @@ namespace Analysis.Test
 
             //try
             //{
-            //    var result = drugManager.Insert(newDrug).Result;
+            //    var result = drugManager.InsertAsync(newDrug).Result;
             //    Console.WriteLine("İlaç başarıyla eklendi.");
             //}
             //catch (Exception ex)
@@ -71,7 +67,7 @@ namespace Analysis.Test
 
             //try
             //{
-            //    var result = equipmentManager.Insert(equipment).Result;
+            //    var result = equipmentManager.InsertAsync(equipment).Result;
             //    Console.WriteLine("Ekipman bilgileri başarılı bir şekilde kaydedildi.");
             //}
             //catch (Exception ex)
@@ -80,19 +76,32 @@ namespace Analysis.Test
             //}
 
 
-            IAnalystManager analystManager = new AnalystManager();
+            //IAnalystManager analystManager = new AnalystManager();
 
-            var analyst = new Analyst
-            {
-                FirstName = "Büşra",
-                LastName = "Demet Aydın",
-                Gender = true,
-                IdentificationNumber = "12312312312",
-                Email = "busrademet@tobiopharma.com",
-                Phone = "536589652300",
-                Title = "Uzman"
+            //var analyst = new Analyst
+            //{
+            //    FirstName = "Büşra",
+            //    LastName = "Demet Aydın",
+            //    Gender = true,
+            //    IdentificationNumber = "12312312313",
+            //    Email = "busrademet@tobiopharma.com",
+            //    Phone = "536589652300",
+            //    Title = "Uzman"
 
-            };
+            //};
+
+            //try
+            //{
+            //    await analystManager.InsertAsync(analyst);
+            //    Console.WriteLine("Analyst added succesfully.");
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    Console.WriteLine("Error" + ex.Message);
+            //}
+
+
         }
     }
 }

@@ -8,12 +8,13 @@ namespace AnalysisManagement.WebMVC.Controllers
     public class DrugController : Controller
     {
         private readonly IDrugManager manager;
+        //private readonly IMapper mapper;
 
         public DrugController(IDrugManager manager)
         {
             this.manager = manager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var result = manager.GetAllAsync().Result;
             return View(result);
@@ -21,7 +22,7 @@ namespace AnalysisManagement.WebMVC.Controllers
 
         public async Task<IActionResult> InsertAsync()
         {
-            DrugInsertVM insertVM = new DrugInsertVM();
+            DrugInsertVM insertVM = new();
             return View(insertVM);
         }
 
@@ -30,9 +31,9 @@ namespace AnalysisManagement.WebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Drug drug1 = new Drug()
+                Drug drug1 = new()
                 {
-                    Id = drug.DrugId,
+
                     ProductCode = drug.ProductCode,
                     BatchNo = drug.BatchNo,
                     DosageForm = drug.DosageForm,
@@ -46,11 +47,13 @@ namespace AnalysisManagement.WebMVC.Controllers
 
                 try
                 {
-                    await manager.InsertAsync(drug1);
+                    var result = await manager.InsertAsync(drug1);
                 }
                 catch (Exception ex)
                 {
+                    //ModelState.AddModelError("", ex.Message);
 
+                    //return View();
 
                 }
                 return RedirectToAction("Index");
@@ -59,5 +62,43 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View(drug);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var drug = await manager.GetByIdAsync(id);
+
+            if (drug == null)
+            {
+                return NotFound();
+            }
+            return View(drug);
+        }
+        public async Task<IActionResult> DeleteAsync(int drugid)
+        {
+            var drug = await manager.GetByIdAsync(drugid);
+
+            return View(drug);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete2(int DrugId)
+        {
+            try
+            {
+                var drug = await manager.GetByIdAsync(DrugId);
+                await manager.DeleteAsync(drug);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+
+            }
+        }
     }
 }

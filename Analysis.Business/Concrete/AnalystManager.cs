@@ -6,22 +6,49 @@ namespace Analysis.Business.Concrete
 {
     public class AnalystManager : ManagerBase<Analyst, int, AnalysisDbContext>, IAnalystManager
     {
+        public bool IsValidIDNo(string identificationNumber)
+
+        {
+            var existingAnalyst = _repository.Get(d => d.IdentificationNumber == identificationNumber).Result;
+            return existingAnalyst != null;
+        }
+
         public bool IsValidEmail(string email)
         {
-            if (email.EndsWith("@tobiopharma.com"))
-            {
-                Console.WriteLine("Email adresi geçerli.");
-                return true;
-            }
-            else
-                Console.WriteLine("Geçersiz bir email adresi girdiniz. Lütfen tobiopharma domainine sahip email adresi girin.");
-            return false;
-
+            var existingAnalyst = _repository.Get(d => d.Email == email).Result;
+            return existingAnalyst != null;
         }
 
-        public override Task<int> InsertAsync(Analyst entity)
+        public override async Task<int> InsertAsync(Analyst entity)
         {
-            return base.InsertAsync(entity);
+
+            if (!entity.Email.EndsWith("@tobiopharma.com"))
+            {
+
+                return -1;
+                Console.WriteLine("Geçersiz bir email adresi girdiniz. Lütfen tobiopharma domainine sahip email adresi girin.");
+            }
+
+            if (entity.IdentificationNumber.Length != 11)
+            {
+
+                return -1;
+                Console.WriteLine("11 karaktere sahip unique bir kimlik numarası giriniz.");
+            }
+
+            if (!IsValidEmail(entity.Email) || !IsValidIDNo(entity.IdentificationNumber))
+            {
+
+                return -1;
+                Console.WriteLine("Bu email adresi veya kimlik numarası zaten kullanımda.");
+            }
+
+            return await base.InsertAsync(entity);
+
+
+
         }
+
     }
 }
+

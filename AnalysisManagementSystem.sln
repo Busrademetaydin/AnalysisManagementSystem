@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalysisManagement.WebMVC",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analysis.WebAPI", "Analysis.WebAPI\Analysis.WebAPI.csproj", "{2FDD0DC0-ACDE-47B2-83A9-E6EBCA953B72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analysis.Test", "Analysis.Test\Analysis.Test.csproj", "{3EFC156D-2EEC-47A5-9243-CF74CF5442A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analysis.Test", "Analysis.Test\Analysis.Test.csproj", "{3EFC156D-2EEC-47A5-9243-CF74CF5442A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

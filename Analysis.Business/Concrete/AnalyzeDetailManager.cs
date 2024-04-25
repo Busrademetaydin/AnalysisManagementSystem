@@ -37,24 +37,12 @@ namespace Analysis.Business.Concrete
                         throw new ArgumentOutOfRangeException("Safsızlık ve enantiyomer analizleri için limit değeri %0.10 veya %0.15 den az olmalıdır.");
                     }
                     break;
-                    //default:
-                    //// Belirtilen analiz türü tanınmıyorsa genel kural uygulanır
-                    //if (limit < 50 || limit > 200)
-                    //{
-                    //    throw new ArgumentOutOfRangeException("Limit değeri 50 ile 200 arasında olmalıdır.");
-                    //}
-                    //break;
-                    throw new ArgumentException("Geçersiz bir analiz türü girdiniz");
+                default:
+                    {
+                        throw new ArgumentException("Geçersiz bir analiz türü girdiniz");
+                    }
+                    break;
 
-                    //Analiz türleri için 
-                    //public enum AnalysisType mı eklesem?
-                    //{Assay,
-                    //Dissolution,
-                    //Enantiomer,
-                    //Impurity gibi....
-
-                    //yoksa direkt analiz türleri diye class mı olusturup ilişki kurup databasee atsam.
-                    //Analiztürünün adı, idsi,açıklaması,aktif olup olmadıgı türün?
             }
 
             analyzeDetail.Limit = limit;

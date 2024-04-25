@@ -13,7 +13,7 @@ namespace Analysis.Entities.Concrete
         public string Title { get; set; }
 
 
-        public ICollection<Analyze> Analyzes { get; set; }
+        public ICollection<Analyze>? Analyzes { get; set; }
 
 
 

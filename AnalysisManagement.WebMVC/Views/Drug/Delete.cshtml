@@ -1,0 +1,63 @@
+﻿@model Drug
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+<h4>Lists of drugs</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ProductCode)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.BatchNo)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.BatchNo)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.DosageForm)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DosageForm)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.MFGDate)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.MFGDate)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.EXPDate)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.EXPDate)
+        </dd>
+        <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.StorageCondition)
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.StorageCondition)
+        </dd>
+    </dl>
+
+
+<form asp-action="Delete2" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+</form>
+
+</div>

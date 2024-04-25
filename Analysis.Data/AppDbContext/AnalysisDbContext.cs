@@ -10,9 +10,7 @@ namespace Analysis.Data.AppDbContext
         {
 
         }
-        public AnalysisDbContext(DbContextOptions<AnalysisDbContext> options) : base(options)
-        {
-        }
+        public AnalysisDbContext(DbContextOptions<AnalysisDbContext> options) : base(options) { }
 
         public DbSet<Analyst> Analysts { get; set; }
         public DbSet<Drug> Drugs { get; set; }

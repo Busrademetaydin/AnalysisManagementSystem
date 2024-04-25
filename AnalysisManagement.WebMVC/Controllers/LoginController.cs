@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AnalysisManagement.WebMVC.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
@@ -6,7 +7,18 @@ namespace AnalysisManagement.WebMVC.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            LoginVM loginVM = new LoginVM();
+            return View(loginVM);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Index(LoginVM loginVM)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(loginVM);
+        //    }
+        //}
+
     }
 }

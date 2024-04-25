@@ -27,6 +27,10 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View(insertVM);
         }
 
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> InsertAsync(AnalyzeInsertVM analyze)

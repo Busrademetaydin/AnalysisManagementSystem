@@ -1,56 +1,58 @@
-﻿@model DrugInsertVM
+﻿@model DrugUpdateVM
 
 <div class="card">
     <div class="card-header">
-        <h3>Create</h3>
-        
+        <h3>Edit</h3>
+
     </div>
     <div class="card-body">
 
-    <form asp-action="Insert" method="post">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+
             <div class="mb-3">
-            <label asp-for="ProductCode" class="form-label">Product Code</label>
+                <label asp-for="ProductCode" class="form-label">Product Code</label>
                 <input asp-for="ProductCode" class="form-control">
                 <div class="text-danger"> <span asp-validation-for="ProductCode"></span></div>
             </div>
-            
-        <div class="mb-3">
-             <label asp-for="BatchNo" class="form-label">Batch No</label>
-             <input asp-for="BatchNo" class="form-control">
-             <div class="text-danger"> <span asp-validation-for="BatchNo"></span></div>
-             </div>
+
+            <div class="mb-3">
+                <label asp-for="BatchNo" class="form-label">Batch No</label>
+                <input asp-for="BatchNo" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="BatchNo"></span></div>
+            </div>
 
             <div class="mb-3">
                 <label asp-for="DosageForm" class="form-label">Dosage Form</label>
                 <input asp-for="DosageForm" class="form-control">
                 <div class="text-danger"> <span asp-validation-for="DosageForm"></span></div>
             </div>
-        <div class="mb-3">
+            <div class="mb-3">
                 <label asp-for="Description" class="form-label">Description</label>
                 <input asp-for="Description" class="form-control">
             </div>
-        <div class="mb-3">
+            <div class="mb-3">
                 <label asp-for="MFGDate" class="form-label">Manufacturing Date</label>
                 <input asp-for="MFGDate" type="date" class="form-control" asp-format="{0:dd.MM.yyyy}">
                 <div class="text-danger"> <span asp-validation-for="MFGDate"></span></div>
-         </div>
-         <div class="mb-3">
+            </div>
+            <div class="mb-3">
                 <label asp-for="EXPDate" class="form-label">Expiration Date</label>
                 <input asp-for="EXPDate" type="date" class="form-control" asp-format="{0:dd.MM.yyyy}">
                 <div class="text-danger"> <span asp-validation-for="EXPDate"></span></div>
-         </div>
-       
+            </div>
 
-         <div class="mb-3">
+
+            <div class="mb-3">
                 <label asp-for="StorageCondition" class="form-label">Storage Condition</label>
                 <input asp-for="StorageCondition" class="form-control">
                 <div class="text-danger"> <span asp-validation-for="StorageCondition"></span></div>
-         </div>
-        <div class="mb-3">
+            </div>
+            <div class="mb-3">
                 <button class="btn btn-success" type="submit">Save</button>
-        </div>
-    </form>
+            </div>
+        </form>
     </div>
 </div>
 

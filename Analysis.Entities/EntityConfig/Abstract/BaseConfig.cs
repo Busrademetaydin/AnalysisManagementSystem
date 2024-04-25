@@ -8,7 +8,7 @@ namespace Analysis.Entities.EntityConfig.Abstract
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(p => p.Id);
             builder.Property(p => p.CreateDate).HasDefaultValueSql("GetDate()");
             builder.Property(p => p.UpdateDate).HasDefaultValueSql("GetDate()");
 

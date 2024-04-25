@@ -14,7 +14,14 @@ namespace Analysis.Entities.EntityConfig.Concrete
             builder.Property(p => p.Password).HasMaxLength(15);
             builder.HasIndex(p => p.UserName).IsUnique();
 
-            //builder.HasData(new User { Id = 1, UserName = "Analyst", Password = "123456**" });
+            builder.HasData(new User { Id = 1, UserName = "Analyst", Password = "123456**" },
+                            //new User { Id = 1, UserName = "Analyst", Password = "12**" },
+                            new User { Id = 2, UserName = "Admin", Password = "1234567**" },
+                            new User { Id = 3, UserName = "Director", Password = "12345678**" },
+                            new User { Id = 4, UserName = "Supervisor", Password = "123456789**" }
+
+
+            );
         }
     }
 }

@@ -14,7 +14,8 @@ namespace Analysis.Entities.EntityConfig.Concrete
             builder.HasIndex(p => p.RoleName).IsUnique();
             builder.HasData(new Role { Id = 1, RoleName = "Analyst" },
                 new Role { Id = 2, RoleName = "Supervisor" },
-                new Role { Id = 3, RoleName = "Director" }
+                new Role { Id = 3, RoleName = "Director" },
+                new Role { Id = 4, RoleName = "Admin" }
                 );
 
         }

@@ -17,5 +17,10 @@ namespace AnalysisManagement.WebMVC.Controllers
 
             return View();
         }
+
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
     }
 }
