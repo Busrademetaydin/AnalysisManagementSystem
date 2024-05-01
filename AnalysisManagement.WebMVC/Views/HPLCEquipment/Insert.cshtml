@@ -9,11 +9,11 @@
             <div asp-validation-summary="All" class="text-danger"></div>
       
 
-        <div class="mb-2">
+    @*     <div class="mb-2">
                 <label asp-for="EquipmentId" class="form-label">Equipment Id</label>
                 <input asp-for="EquipmentId" class="form-control">
                 <div class="text-danger"> <span asp-validation-for="EquipmentId"></span></div>
-         </div>
+         </div> *@
             <div class="mb-2">
                 <label asp-for="Brand" class="form-label">Brand</label>
                 <input asp-for="Brand" class="form-control">
@@ -26,7 +26,7 @@
             </div>
             <div class="mb-2">
                 <label asp-for="CalibrationDueDate" class="form-label">Calibration Due Date</label>
-                <input asp-for="CalibrationDueDate" class="form-control">
+                <input asp-for="CalibrationDueDate" class="form-control" asp-format="{0:dd.MM.yyyy}">
                 <div class="text-danger"> <span asp-validation-for="CalibrationDueDate"></span></div>
             </div>
             

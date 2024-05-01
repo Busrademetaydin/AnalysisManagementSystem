@@ -4,16 +4,16 @@ namespace AnalysisManagement.WebMVC.Models
 {
     public class HPLCEquipmentInsertVM
     {
-        public int EquipmentId { get; set; }
+        //public int EquipmentId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ekipman markası boş bırakılamaz")]
-        public int Brand { get; set; }
+        public string Brand { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ekipmanın seri no.su boş bırakılamaz")]
-        public int SerialNumber { get; set; }
+        public string SerialNumber { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ekipmanın kalibrasyon geçerlilik tarihi boş bırakılamaz")]
-        public int CalibrationDueDate { get; set; }
+        public DateTime CalibrationDueDate { get; set; }
 
     }
 

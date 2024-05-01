@@ -1,11 +1,14 @@
 ﻿using Analysis.Entities.Abstract;
+using System.ComponentModel.DataAnnotations;
 
 namespace Analysis.Entities.Concrete
 {
     public class AnalyzeDetail : BaseEntity<int>
     {
+        [Display(Name = "Analyze Id")]
         public int AnalyzeId { get; set; }
 
+        [Display(Name = "Drug Id")]
         public int DrugId { get; set; }
 
         public int Limit { get; set; }

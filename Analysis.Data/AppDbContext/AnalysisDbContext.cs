@@ -1,10 +1,12 @@
 ﻿using Analysis.Entities.Concrete;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Analysis.Data.AppDbContext
 {
-    public class AnalysisDbContext : DbContext
+    public class AnalysisDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
         public AnalysisDbContext()
         {
@@ -21,7 +23,7 @@ namespace Analysis.Data.AppDbContext
 
         public DbSet<AnalyzeType> AnalyzeTypes { get; set; }
 
-        public DbSet<Role> Role { get; set; }
+
 
 
 
@@ -33,8 +35,15 @@ namespace Analysis.Data.AppDbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Analysis.Entities"));
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Analysis.Entities"));
 
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.HasKey(p => p.UserId);
+            });
         }
     }
 }

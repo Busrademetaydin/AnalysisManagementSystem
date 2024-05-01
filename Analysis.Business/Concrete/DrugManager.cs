@@ -2,6 +2,7 @@
 using Analysis.Data.AppDbContext;
 using Analysis.Entities.Concrete;
 
+
 namespace Analysis.Business.Concrete
 {
     public class DrugManager : ManagerBase<Drug, int, AnalysisDbContext>, IDrugManager

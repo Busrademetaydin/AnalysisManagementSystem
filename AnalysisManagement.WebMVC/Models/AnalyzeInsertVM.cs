@@ -4,7 +4,7 @@ namespace AnalysisManagement.WebMVC.Models
 {
     public class AnalyzeInsertVM
     {
-        public int AnalyzeId { get; set; }
+        //public int AnalyzeId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Kullanılacak ekipman idsi boş bırakılamaz")]
         public int EquipmentId { get; set; }

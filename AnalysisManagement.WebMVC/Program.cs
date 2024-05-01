@@ -2,7 +2,11 @@
 using Analysis.Business.Abstract;
 using Analysis.Business.Concrete;
 using Analysis.Data.AppDbContext;
+using Analysis.Entities.Concrete;
+using AnalysisManagement.WebMVC.AutoMapperProfile;
 using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -25,16 +29,32 @@ namespace AnalysisManagement.WebMVC
 
                 var builder = WebApplication.CreateBuilder(args);
 
-                // Add services to the container.
+
                 builder.Services.AddControllersWithViews();
                 builder.Services.AddDbContext<AnalysisDbContext>(options => options.UseSqlServer
                 (builder.Configuration.GetConnectionString("AnalysisManagement")));
+
+                builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
                 builder.Services.AddScoped<IHPLCEquipmentManager, HPLCEquipmentManager>();
                 builder.Services.AddScoped<IDrugManager, DrugManager>();
                 builder.Services.AddScoped<IAnalysisManager, AnalysisManager>();
                 builder.Services.AddScoped<IAnalystManager, AnalystManager>();
                 builder.Services.AddScoped<IAnalyzeDetailManager, AnalyzeDetailManager>();
+
+                builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+                {
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedPhoneNumber = true;
+                    options.SignIn.RequireConfirmedEmail = true;
+                    options.SignIn.RequireConfirmedAccount = true;
+                }).AddEntityFrameworkStores<AnalysisDbContext>();
 
                 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
@@ -54,6 +74,7 @@ namespace AnalysisManagement.WebMVC
                 app.UseRouting();
 
                 app.UseAuthorization();
+                app.UseNotyf();
 
                 app.UseEndpoints(endpoints =>
                 {
@@ -64,7 +85,7 @@ namespace AnalysisManagement.WebMVC
 
                     endpoints.MapControllerRoute(
                         name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                        pattern: "{controller=Login}/{action=Register}/{id?}");
                 });
 
 

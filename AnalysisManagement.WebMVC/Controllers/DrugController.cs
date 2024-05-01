@@ -1,29 +1,39 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Entities.Concrete;
 using AnalysisManagement.WebMVC.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
+    //[Authorize]
     public class DrugController : Controller
     {
         private readonly IDrugManager manager;
-        //private readonly IMapper mapper;
+        private readonly INotyfService notyf;
+        private readonly IMapper mapper;
 
-        public DrugController(IDrugManager manager)
+        public DrugController(IDrugManager manager, INotyfService notyf, IMapper mapper)
         {
             this.manager = manager;
+            this.notyf = notyf;
+            this.mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
             var result = manager.GetAllAsync().Result;
             return View(result);
         }
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
 
         public async Task<IActionResult> InsertAsync()
         {
-            DrugInsertVM insertVM = new();
-            return View(insertVM);
+            DrugInsertVM drug = new();
+            return View(drug);
         }
 
         [HttpPost]
@@ -41,8 +51,6 @@ namespace AnalysisManagement.WebMVC.Controllers
                     MFGDate = drug.MFGDate,
                     EXPDate = drug.EXPDate,
                     StorageCondition = drug.StorageCondition
-
-
                 };
 
                 try
@@ -51,46 +59,69 @@ namespace AnalysisManagement.WebMVC.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //ModelState.AddModelError("", ex.Message);
-
-                    //return View();
-
+                    ModelState.AddModelError("", ex.Message);
+                    notyf.Error("Hata:" + ex.Message);
+                    return View();
                 }
-                return RedirectToAction("Index");
+
             }
-
-            return View(drug);
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
-
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var drug = await manager.GetByIdAsync(id);
+            var result = await manager.GetByIdAsync(id);
+            var update = mapper.Map<DrugUpdateVM>(result);
 
-            if (drug == null)
-            {
-                return NotFound();
-            }
-            return View(drug);
+
+            return View(update);
         }
-        public async Task<IActionResult> DeleteAsync(int drugid)
-        {
-            var drug = await manager.GetByIdAsync(drugid);
-
-            return View(drug);
-        }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete2(int DrugId)
+        public async Task<ActionResult> Edit(DrugUpdateVM updateVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var drug = mapper.Map<Drug>(updateVM);
+                    manager.UpdateAsync(drug);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public async Task<IActionResult> DeleteAsync(int Id)
+        {
+            var drug = await manager.GetByIdAsync(Id);
+
+            return View(drug);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int Id)
         {
             try
             {
-                var drug = await manager.GetByIdAsync(DrugId);
+                var drug = await manager.GetByIdAsync(Id);
                 await manager.DeleteAsync(drug);
                 return RedirectToAction(nameof(Index));
             }
