@@ -3,11 +3,12 @@ using Analysis.Entities.Concrete;
 using AnalysisManagement.WebMVC.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = "Analyst")]
     public class DrugController : Controller
     {
         private readonly IDrugManager manager;
@@ -30,6 +31,7 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View();
         }
 
+        //[Authorize(Roles = "Supervisor")]
         public async Task<IActionResult> InsertAsync()
         {
             DrugInsertVM drug = new();

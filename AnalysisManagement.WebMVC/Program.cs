@@ -51,9 +51,10 @@ namespace AnalysisManagement.WebMVC
                     options.Password.RequireNonAlphanumeric = false;
 
                     options.User.RequireUniqueEmail = true;
-                    options.SignIn.RequireConfirmedPhoneNumber = true;
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
                     options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedAccount = true;
+                    options.SignIn.RequireConfirmedAccount = false;
+
                 }).AddEntityFrameworkStores<AnalysisDbContext>();
 
                 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
@@ -73,6 +74,7 @@ namespace AnalysisManagement.WebMVC
 
                 app.UseRouting();
 
+                app.UseAuthentication();
                 app.UseAuthorization();
                 app.UseNotyf();
 
@@ -85,7 +87,7 @@ namespace AnalysisManagement.WebMVC
 
                     endpoints.MapControllerRoute(
                         name: "default",
-                        pattern: "{controller=Login}/{action=Register}/{id?}");
+                        pattern: "{controller=Login}/{action=Index}/{id?}");
                 });
 
 

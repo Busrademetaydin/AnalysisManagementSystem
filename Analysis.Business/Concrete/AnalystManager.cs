@@ -25,22 +25,20 @@ namespace Analysis.Business.Concrete
             if (!entity.Email.EndsWith("@tobiopharma.com"))
             {
 
-                return -1;
-                Console.WriteLine("Geçersiz bir email adresi girdiniz. Lütfen tobiopharma domainine sahip email adresi girin.");
+                throw new Exception("Geçersiz bir email adresi girdiniz. Lütfen tobiopharma domainine sahip email adresi girin.");
             }
 
             if (entity.IdentificationNumber.Length != 11)
             {
 
-                return -1;
-                Console.WriteLine("11 karaktere sahip unique bir kimlik numarası giriniz.");
+                throw new Exception("11 karaktere sahip unique bir kimlik numarası giriniz.");
+
             }
 
             if (!IsValidEmail(entity.Email) || !IsValidIDNo(entity.IdentificationNumber))
             {
 
-                return -1;
-                Console.WriteLine("Bu email adresi veya kimlik numarası zaten kullanımda.");
+                throw new Exception("Bu email adresi veya kimlik numarası zaten kullanımda.");
             }
 
             return await base.InsertAsync(entity);

@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AnalysisManagement.WebMVC.styles.css" asp-append-version="true" />
+   @*  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> *@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -22,6 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        
                         @* <li class="nav-item"> *@
                        @*      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
@@ -35,6 +39,36 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
                         </li>
                     </ul>
+                    <div class="nav-item">
+          
+                        @* @if (User.Identity.IsAuthenticated)
+                        {
+
+                            <a style="color: black;" class="nav-link" href="@Url.Action("Logout", "Account")">Logout    </a>
+                                <div class="rounded-circle text-center" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                    <span class="navbar-text"> @(User.Identity.Name?[0].ToString().ToUpper())</span>
+                                </div>
+                         
+                        } *@
+                       
+                        <div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                            <div class="rounded-circle text-center" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                <span>@(User.Identity.Name?[0].ToString().ToUpper())</span>
+                            </div>
+
+                                @* <a class="nav-link" href="@Url.Action("Logout", "Account")"> <span style="color: black;">Logout</span></a> *@
+                        } 
+                            else
+                        {
+                            <a class="nav-link" href="@Url.Action("Index", "Login")"><i class="fa-solid fa-user" style="color:darkmagenta"></i> <span style="color: black;">Login</span></a>
+                        }
+                        </div> 
+                       
+                       
+                   
+                    </div>
                 </div>
             </div>
         </nav>

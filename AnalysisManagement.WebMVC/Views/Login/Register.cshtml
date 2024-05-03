@@ -22,13 +22,15 @@
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
-        <div class="card card-outline card-primary">
+        <div class="card card-outline">
             <div class="card-header text-center">
                 <a href="../../index2.html" class="h1"><b>Sign Up</b></a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Register a new membership</p>
                 <form asp-action="Register" method="post">
+                    
+                    <div class="text-danger" asp-validation-summary="All"></div>
 
                     <div class="input-group mb-3">
                         <input asp-for="UserName" class="form-control" placeholder="Username">
@@ -42,7 +44,7 @@
                         <input asp-for="IdentificationNumber" class="form-control" placeholder="Identification Number">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span><i class="far fa-id-card"></i></span>
+                                <span><i class="far fa-id-card align-items:center display:flex justify-content-center"></i></span>
                             </div>
                         </div>
                     </div>
@@ -50,7 +52,7 @@
                         <input asp-for="Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-envelope align-items:center display:flex justify-content-center"></span>
                             </div>
                         </div>
                     </div>

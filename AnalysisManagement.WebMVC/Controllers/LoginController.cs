@@ -35,21 +35,21 @@ namespace AnalysisManagement.WebMVC.Controllers
             var user = await userManager.FindByEmailAsync(loginVM.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", "Email yada şifre yanliş");
+                ModelState.AddModelError("", "Email or password is incorrect.Please retry.");
                 return View(loginVM);
             }
 
             if (!user.EmailConfirmed)
             {
-                ModelState.AddModelError("", "Email Onaylanmamistir");
+                ModelState.AddModelError("", "Email not confirmed.");
                 return View(loginVM);
             }
 
-            var result = await signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
+            var result = await signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Drugs");
+                return RedirectToAction("Index", "Drug");
             }
 
 
@@ -86,6 +86,43 @@ namespace AnalysisManagement.WebMVC.Controllers
                 return View(registerVM);
             }
 
+            //// Rollerin var olup olmadığını kontrol edin ve yoksa oluşturun
+            //    string[] rolesToCreate = { "Analyst", "Admin", "Editor" }; // İstediğiniz rolleri buraya ekleyin
+
+            //    foreach (var roleName in rolesToCreate)
+            //    {
+            //        if (await roleManager.FindByNameAsync(roleName) == null)
+            //        {
+            //            await roleManager.CreateAsync(new IdentityRole(roleName));
+            //        }
+            //    }
+
+            //    // Kullanıcıyı rollerle ilişkilendirin
+            //    var result2 = await userManager.AddToRoleAsync(appUser, "Analyst");
+
+            //    if (result2.Succeeded)
+            //    {
+            //        return RedirectToAction("Index", "Drug");
+            //    }
+
+            //    return View(registerVM);
+            //}
+
+            //Evet, birden fazla role tanımlayabilirsiniz.
+            //AddToRoleAsync yöntemini birden fazla kez çağırarak kullanıcıya
+            //birden fazla rol atayabilirsiniz.Örneğin:
+
+            //var result2 = await userManager.AddToRoleAsync(appUser, "Analyst");
+            //var result3 = await userManager.AddToRoleAsync(appUser, "Admin");
+            //var result4 = await userManager.AddToRoleAsync(appUser, "Editor");
+
+            //if (result2.Succeeded && result3.Succeeded && result4.Succeeded)
+            //{
+            //    return RedirectToAction("Index", "Drug");
+            //}
+
+            //return View(registerVM);
+
             if (await roleManager.FindByNameAsync("Analyst") == null)
             {
                 IdentityRole role = new IdentityRole();
@@ -97,7 +134,7 @@ namespace AnalysisManagement.WebMVC.Controllers
 
             if (result2.Succeeded)
             {
-                return RedirectToAction("Index", "Drugs");
+                return RedirectToAction("Index", "Drug");
             }
             return View(registerVM);
 

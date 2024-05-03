@@ -33,7 +33,7 @@ namespace Analysis.Business.Concrete
                 throw new Exception("Aynı ürün batch numarasına sahip ilaç zaten mevcut.");
             }
 
-            // Kontrollerden geçtiyse ilacı ekle
+
             return await base.InsertAsync(entity);
         }
     }
