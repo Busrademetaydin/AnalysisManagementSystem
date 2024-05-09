@@ -1,10 +1,35 @@
-﻿namespace Analysis.WebAPI
+﻿using Analysis.Business.Abstract;
+using Analysis.Business.Concrete;
+using Analysis.Data.AppDbContext;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+namespace Analysis.WebAPI
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<AnalysisDbContext>(options => options.UseSqlServer
+            (builder.Configuration.GetConnectionString("AnalysisManagement")));
+            builder.Services.AddScoped<IDrugManager, DrugManager>();
+
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("http://localhost:5143/");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //var result = client.GetAsync("api/Drug").Result;
+
+            //if (result.IsSuccessStatusCode)
+            //{
+            //    var content = result.Content.ReadAsStringAsync();
+            //}
+
+            //Console.WriteLine("Hello");
+
 
             // Add services to the container.
             //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -30,7 +55,10 @@
             //});
 
             //ValidAudiences =
-            builder.Services.AddControllers();
+
+            //builder.Services.AddControllers();
+
+            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

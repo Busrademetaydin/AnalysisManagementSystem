@@ -1,6 +1,8 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Entities.Concrete;
 using AnalysisManagement.WebMVC.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
@@ -8,10 +10,14 @@ namespace AnalysisManagement.WebMVC.Controllers
     public class HPLCEquipmentController : Controller
     {
         private readonly IHPLCEquipmentManager manager;
+        private readonly INotyfService notyf;
+        private readonly IMapper mapper;
 
-        public HPLCEquipmentController(IHPLCEquipmentManager manager)
+        public HPLCEquipmentController(IHPLCEquipmentManager manager, INotyfService notyf, IMapper mapper)
         {
             this.manager = manager;
+            this.notyf = notyf;
+            this.mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -22,8 +28,8 @@ namespace AnalysisManagement.WebMVC.Controllers
 
         public async Task<IActionResult> InsertAsync()
         {
-            HPLCEquipmentInsertVM insertVM = new();
-            return View(insertVM);
+            HPLCEquipmentInsertVM equipment = new();
+            return View(equipment);
         }
 
         [HttpPost]
@@ -45,9 +51,9 @@ namespace AnalysisManagement.WebMVC.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //ModelState.AddModelError("", ex.Message);
-
-                    //return View();
+                    ModelState.AddModelError("", ex.Message);
+                    notyf.Error("Hata:" + ex.Message);
+                    return View();
 
                 }
                 return RedirectToAction("Index");
@@ -59,6 +65,41 @@ namespace AnalysisManagement.WebMVC.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var result = await manager.GetByIdAsync(id);
+            var update = mapper.Map<HPLCEquipmentUpdateVM>(result);
+
+
+            return View(update);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(HPLCEquipmentUpdateVM updateVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var equipment = mapper.Map<HPLCEquipment>(updateVM);
+                    manager.UpdateAsync(equipment);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

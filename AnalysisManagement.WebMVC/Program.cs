@@ -51,13 +51,21 @@ namespace AnalysisManagement.WebMVC
                     options.Password.RequireNonAlphanumeric = false;
 
                     options.User.RequireUniqueEmail = true;
+                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                     options.SignIn.RequireConfirmedPhoneNumber = false;
                     options.SignIn.RequireConfirmedEmail = true;
                     options.SignIn.RequireConfirmedAccount = false;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
 
                 }).AddEntityFrameworkStores<AnalysisDbContext>();
 
-                builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+                builder.Services.AddNotyf(config =>
+                {
+                    config.DurationInSeconds = 10;
+                    config.IsDismissable = true;
+                    config.Position = NotyfPosition.BottomRight;
+                });
 
                 var app = builder.Build();
 

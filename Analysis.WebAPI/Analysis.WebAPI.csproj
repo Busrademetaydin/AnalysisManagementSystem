@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Analysis.Business\Analysis.Business.csproj" />
     <ProjectReference Include="..\AnalysisManagement.WebMVC\AnalysisManagement.WebMVC.csproj" />
   </ItemGroup>
 

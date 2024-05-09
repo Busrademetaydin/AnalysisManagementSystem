@@ -2,9 +2,9 @@
 
 namespace AnalysisManagement.WebMVC.Models
 {
-    public class HPLCEquipmentInsertVM
+    public class HPLCEquipmentUpdateVM
     {
-
+        public int HPLCEquipmentId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ekipman markası boş bırakılamaz")]
         public string Brand { get; set; }

@@ -23,9 +23,9 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="card card-outline">
-            <div class="card-header text-center">
+          @*   <div class="card-header text-center">
                 <a href="../../index2.html" class="h1"><b>Sign Up</b></a>
-            </div>
+            </div> *@
             <div class="card-body">
                 <p class="login-box-msg">Register a new membership</p>
                 <form asp-action="Register" method="post">
@@ -44,7 +44,7 @@
                         <input asp-for="IdentificationNumber" class="form-control" placeholder="Identification Number">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span><i class="far fa-id-card align-items:center display:flex justify-content-center"></i></span>
+                                <span class="far fa-id-card "></span>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <input asp-for="Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope align-items:center display:flex justify-content-center"></span>
+                                <span class="fas fa-envelope "></span>
                             </div>
                         </div>
                     </div>
@@ -77,13 +77,14 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                                 <label for="agreeTerms">
-                                    I agree to the <a href="#">terms</a>
+                                    I agree to the <a style="color:darkmagenta" href="#">terms</a>
                                 </label>
                             </div>
                         </div>
 
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                            <button type="submit" style="background-color:darkmagenta; color: white;" class="btn btn-block">REGISTER</button>
+                            
                         </div>
 
                     </div>

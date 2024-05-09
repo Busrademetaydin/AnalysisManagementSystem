@@ -37,6 +37,7 @@ namespace Analysis.Data.AppDbContext
 
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Analysis.Entities"));
             base.OnModelCreating(modelBuilder);
+            SeedRoles(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Analysis.Entities"));
 
@@ -44,6 +45,17 @@ namespace Analysis.Data.AppDbContext
             {
                 entity.HasKey(p => p.UserId);
             });
+        }
+
+        private static void SeedRoles(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IdentityRole>().HasData
+                (
+                new IdentityRole() { Name = "Analyst", ConcurrencyStamp = "1", NormalizedName = "Analyst" },
+                new IdentityRole() { Name = "Supervisor", ConcurrencyStamp = "2", NormalizedName = "Supervisor" },
+                new IdentityRole() { Name = "Manager", ConcurrencyStamp = "3", NormalizedName = "Manager" }
+
+                );
         }
     }
 }
