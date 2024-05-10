@@ -14,6 +14,7 @@ namespace Analysis.WebAPI
 
             builder.Services.AddDbContext<AnalysisDbContext>(options => options.UseSqlServer
             (builder.Configuration.GetConnectionString("AnalysisManagement")));
+
             builder.Services.AddScoped<IDrugManager, DrugManager>();
 
             //HttpClient client = new HttpClient();
