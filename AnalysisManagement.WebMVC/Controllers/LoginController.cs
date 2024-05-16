@@ -33,7 +33,7 @@ namespace AnalysisManagement.WebMVC.Controllers
                 return View(loginVM);
             }
             var user = await userManager.FindByEmailAsync(loginVM.Email);
-            if (user == null)
+            if (user == null || !await userManager.CheckPasswordAsync(user, loginVM.Password))
             {
                 ModelState.AddModelError("", "Email or password is incorrect.Please retry.");
                 return View(loginVM);

@@ -4,6 +4,7 @@ using Analysis.Data.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Analysis.Data.Migrations
 {
     [DbContext(typeof(AnalysisDbContext))]
-    partial class AnalysisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240515221405_IsDelete")]
+    partial class IsDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,9 +249,6 @@ namespace Analysis.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -427,21 +427,21 @@ namespace Analysis.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4100745e-bfb2-4bbc-a743-5e6443eff2fe",
+                            Id = "7f4e5078-bc11-4dd4-8fe6-5bddd6b3c350",
                             ConcurrencyStamp = "1",
                             Name = "Analyst",
                             NormalizedName = "Analyst"
                         },
                         new
                         {
-                            Id = "99e52313-7995-4597-addf-9818c358617a",
+                            Id = "7704fc31-3e9a-4ea7-8198-f1acbd96d2b9",
                             ConcurrencyStamp = "2",
                             Name = "Supervisor",
                             NormalizedName = "Supervisor"
                         },
                         new
                         {
-                            Id = "ef51ffc0-477d-4464-bdb4-627543a186c2",
+                            Id = "af9a05c1-91b4-4998-8c1a-d6250e713adf",
                             ConcurrencyStamp = "3",
                             Name = "Manager",
                             NormalizedName = "Manager"

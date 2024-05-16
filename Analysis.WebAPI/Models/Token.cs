@@ -1,10 +1,10 @@
-﻿namespace Analysis.WebAPI.Models
-{
-    public class Token
-    {
-        public bool AuthenticateResult { get; set; }
-        public string AuthToken { get; set; }
-        public DateTime AccessTokenExpireDate { get; set; }
-    }
+﻿//namespace Analysis.WebAPI.Models
+//{
+//    public class Token
+//    {
+//        public string AccessToken { get; set; }
+//        public string RefreshToken { get; set; }
+//        public DateTime AccessTokenExpireDate { get; set; }
+//    }
 
-}
+//}

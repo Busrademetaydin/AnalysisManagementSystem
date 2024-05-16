@@ -1,8 +1,7 @@
-﻿using Analysis.Business.Abstract;
-using Analysis.Business.Concrete;
-using Analysis.Data.AppDbContext;
+﻿using Analysis.Data.AppDbContext;
+using Analysis.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 namespace Analysis.WebAPI
 {
@@ -10,59 +9,67 @@ namespace Analysis.WebAPI
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<AnalysisDbContext>(options => options.UseSqlServer
             (builder.Configuration.GetConnectionString("AnalysisManagement")));
 
-            builder.Services.AddScoped<IDrugManager, DrugManager>();
 
-            //HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("http://localhost:5143/");
-            //client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            builder.Services.AddControllers();
 
-            //var result = client.GetAsync("api/Drug").Result;
-
-            //if (result.IsSuccessStatusCode)
-            //{
-            //    var content = result.Content.ReadAsStringAsync();
-            //}
-
-            //Console.WriteLine("Hello");
-
-
-            // Add services to the container.
-            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //                .AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        //burada yazdıgımız kodlar token validation için yani jwt nin dogru
-            //        //olup olmadıgının anlasılması ıcın kullanılmasını istedigimiz ayarlar.
-
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = builder.Configuration["Jwt: Issuer"],
-            //        ValidAudience = builder.Configuration["Jwt: Audience"],
-            //        //ValidIssuer = "https://localhost:7003",
-            //        //ValidAudience = "https://localhost:7003",
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt: Key"] ?? string.Empty))
-            //    };
-
-
-            //});
-
-            //ValidAudiences =
-
-            //builder.Services.AddControllers();
-
-            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "JWTToken_Auth_API",
+                    Version = "v1"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                        new OpenApiSecurityScheme {
+                        Reference = new OpenApiReference {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+            });
+
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedAccount = false;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            })
+                .AddEntityFrameworkStores<AnalysisDbContext>();
 
             var app = builder.Build();
 
@@ -73,8 +80,12 @@ namespace Analysis.WebAPI
                 app.UseSwaggerUI();
             }
 
+            app.MapIdentityApi<AppUser>();
+
+
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
