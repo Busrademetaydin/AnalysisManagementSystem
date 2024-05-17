@@ -1,0 +1,33 @@
+﻿<div class="form-group">
+    <label for="analyst">Analist</label>
+    <input type="text" id="analyst" class="form-control">
+    <input type="hidden" id="analystId" name="AnalystId"> 
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+<script>
+    $(function () {
+        $("#analyst").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Analyst/GetAnalysts",
+                    type: "GET",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.label, value: item.label, id: item.id };
+                        }));
+                    }
+                });
+            },
+            minLength: 2, 
+            select: function (event, ui) {
+                $("#analystId").val(ui.item.id); 
+            }
+        });
+    });
+</script>

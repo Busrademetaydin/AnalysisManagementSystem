@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +28,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @inject SignInManager<AppUser> SignInManager
+                        @inject UserManager<AppUser> UserManager
+                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Supervisor"))
+                        {
+                            <li class="nav-item dropdown show">
+                                <a class="dropdown-toggle nav-link text-dark" href="#" data-toggle="dropdown">Analyzes</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Analyzes" asp-controller="Analysis" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a>
+                                    <a class="dropdown-item" asp-area="Drugs" asp-controller="Drug" asp-action="Index"><i class="fas fa-users mr-2"></i>Users to Category</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="HPLC Equipments" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a>
+                                </div>
+                            </li>
+                        }
                         
                         @* <li class="nav-item"> *@
                        @*      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -39,37 +56,24 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
                         </li>
                     </ul>
+                  
                     <div class="nav-item">
-          
-                        @* @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated)
                         {
-
-                            <a style="color: black;" class="nav-link" href="@Url.Action("Logout", "Account")">Logout    </a>
-                                <div class="rounded-circle text-center" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
-                                    <span class="navbar-text"> @(User.Identity.Name?[0].ToString().ToUpper())</span>
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="rounded-circle text-center mb-2" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                    <span id="userInitial">@Html.Raw((User.Identity.Name?[0].ToString().ToUpper()))</span>
                                 </div>
-                         
-                        } *@
-                       
-                        <div>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                            <div class="rounded-circle text-center" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
-                                <span>@(User.Identity.Name?[0].ToString().ToUpper())</span>
                             </div>
-
-                                @* <a class="nav-link" href="@Url.Action("Logout", "Account")"> <span style="color: black;">Logout</span></a> *@
-                        } 
-                            else
-                        {
-                            <a class="nav-link" href="@Url.Action("Index", "Login")"><i class="fa-solid fa-user" style="color:darkmagenta"></i> <span style="color: black;">Login</span></a>
                         }
-                        </div> 
-                       
-                       
-                   
+                        else
+                        {
+                            <a class="nav-link" href="@Url.Action("Index", "Login")">
+                                <i class="fa-solid fa-user" style="color:darkmagenta"></i>
+                                <span style="color: black;">Login</span>
+                            </a>
+                        }
                     </div>
-                </div>
             </div>
         </nav>
     </header>
@@ -84,9 +88,22 @@
             &copy; @DateTime.Now.Year - AnalysisManagement.WebMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
+        <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
+    </form>
+    <script>
+    document.getElementById("userInitial").addEventListener("click", function(event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to logout?")) {
+            document.getElementById("logoutForm").submit();
+        }
+    });
+</script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+   
     @await RenderSectionAsync("Scripts", required: false)
+   
 </body>
 </html>

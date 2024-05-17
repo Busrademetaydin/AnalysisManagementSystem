@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Analysis\Details.cshtml" />
+    <Content Remove="Views\Drug\Details.cshtml" />
+    <Content Remove="Views\HPLCEquipment\Details.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MailKit" Version="4.5.0" />
@@ -32,6 +38,20 @@
     <ProjectReference Include="..\Analysis.Business\Analysis.Business.csproj" />
     <ProjectReference Include="..\Analysis.Data\Analysis.Data.csproj" />
     <ProjectReference Include="..\Analysis.Entities\Analysis.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Drug\Details.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Drug\Details.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Analysis\Details.cshtml" />
+    <None Include="Views\Drug\Details.cshtml" />
+    <None Include="Views\HPLCEquipment\Details.cshtml" />
   </ItemGroup>
 
 </Project>
