@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Analysis.Business\Analysis.Business.csproj" />
     <ProjectReference Include="..\Analysis.Data\Analysis.Data.csproj" />
     <ProjectReference Include="..\Analysis.Entities\Analysis.Entities.csproj" />
+    <ProjectReference Include="..\Analysis.Test\Analysis.Test.csproj" />
     <ProjectReference Include="..\AnalysisManagement.WebMVC\AnalysisManagement.WebMVC.csproj" />
   </ItemGroup>
 
