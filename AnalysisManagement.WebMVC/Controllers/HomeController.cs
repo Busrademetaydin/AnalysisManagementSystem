@@ -1,4 +1,4 @@
-using Analysis.Data.AppDbContext;
+﻿using Analysis.Data.AppDbContext;
 using Analysis.Entities.Concrete;
 using AnalysisManagement.WebMVC.Models;
 using Microsoft.AspNetCore.Identity;
@@ -30,12 +30,30 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View();
         }
 
-        public IActionResult ContactUs()
+        public IActionResult Contact()
         {
             return View();
         }
 
-        public IActionResult AboutUs()
+        [HttpPost]
+        public IActionResult Contact(ContactVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Form verilerini kullanarak veritabanına kayıt işlemleri
+                // Örneğin: _context.ContactMessages.Add(new ContactMessage { ... });
+                // Bu işlemleri gerçekleştirdikten sonra başka bir sayfaya yönlendirme yapabilirsiniz.
+                return RedirectToAction("Index", "Home"); // Örnek bir yönlendirme
+
+            }
+            else
+            {
+                // Model geçerliliği sağlanmadıysa, hata mesajlarını göstermek için Contact sayfasına geri dönün
+                return View(model);
+            }
+        }
+
+        public IActionResult About()
         {
             return View();
         }

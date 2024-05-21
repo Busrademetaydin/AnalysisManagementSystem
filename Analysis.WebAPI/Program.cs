@@ -1,5 +1,7 @@
 ﻿using Analysis.Data.AppDbContext;
 using Analysis.Entities.Concrete;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -50,7 +52,6 @@ namespace Analysis.WebAPI
     });
             });
 
-
             builder.Services.AddAuthorization();
 
             builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
@@ -66,10 +67,16 @@ namespace Analysis.WebAPI
                 options.SignIn.RequireConfirmedPhoneNumber = false;
                 options.SignIn.RequireConfirmedEmail = true;
                 //options.SignIn.RequireConfirmedAccount = false;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
                 options.Lockout.MaxFailedAccessAttempts = 5;
             })
                 .AddEntityFrameworkStores<AnalysisDbContext>();
+
+            builder.Services.AddOptions<BearerTokenOptions>(IdentityConstants.BearerScheme).Configure(options =>
+            {
+                options.BearerTokenExpiration = TimeSpan.FromSeconds(60);
+            });
+
 
             var app = builder.Build();
 
