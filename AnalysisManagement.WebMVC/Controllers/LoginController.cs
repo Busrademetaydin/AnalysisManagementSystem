@@ -10,7 +10,7 @@ namespace AnalysisManagement.WebMVC.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
-        private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public LoginController(UserManager<AppUser> userManager,
                                 SignInManager<AppUser> signInManager,
@@ -59,7 +59,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
         public IActionResult Register()
         {
-            RegisterVM registerVM = new RegisterVM();
+            RegisterVM registerVM = new();
             return View(registerVM);
         }
 

@@ -15,10 +15,10 @@ namespace AnalysisManagement.WebMVC.Models
 
             SmtpClient smtpClient = new SmtpClient();
 
-            smtpClient.Credentials = new System.Net.NetworkCredential("busrademet16@gmail.com", "MyCareer24!!");
+            smtpClient.Credentials = new System.Net.NetworkCredential("busrademet16@gmail.com", "zoexmxynmvtupauk");
             smtpClient.Port = 587;
             smtpClient.EnableSsl = true;
-            smtpClient.Host = "smtp.gmail.com";
+            smtpClient.Host = " smtp.gmail.com";
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             try
             {
