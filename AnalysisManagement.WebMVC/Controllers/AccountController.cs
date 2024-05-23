@@ -12,6 +12,8 @@ namespace AnalysisManagement.WebMVC.Controllers
         public AccountController(SignInManager<AppUser> signInManager)
         {
             _signInManager = signInManager;
+
+
         }
 
         [HttpPost]
@@ -26,6 +28,13 @@ namespace AnalysisManagement.WebMVC.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Yasak()
+        {
+
+            return Content("Bu sayfaya erişim izniniz bulunmamaktadır. Lütfen yetkilendirilmiş bir kullanıcı hesabıyla giriş yapınız.");
         }
     }
 }

@@ -36,20 +36,28 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(ContactVM model)
+        public async Task<IActionResult> Contact([FromBody] ContactVM model)
         {
             if (ModelState.IsValid)
             {
-                // Form verilerini kullanarak veritabanına kayıt işlemleri
-                // Örneğin: _context.ContactMessages.Add(new ContactMessage { ... });
-                // Bu işlemleri gerçekleştirdikten sonra başka bir sayfaya yönlendirme yapabilirsiniz.
-                return RedirectToAction("Index", "Home"); // Örnek bir yönlendirme
+                var contactMessage = new ContactMessage
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Subject = model.Subject,
+                    Message = model.Message
+                };
+                dbcontext.ContactMessages.Add(contactMessage);
+                await dbcontext.SaveChangesAsync();
+
+
+                return Ok("Thank you for contacting us!");
 
             }
             else
             {
-                // Model geçerliliği sağlanmadıysa, hata mesajlarını göstermek için Contact sayfasına geri dönün
-                return View(model);
+
+                return BadRequest(ModelState);
             }
         }
 

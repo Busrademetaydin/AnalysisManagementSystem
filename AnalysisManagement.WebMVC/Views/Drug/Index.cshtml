@@ -17,6 +17,7 @@
             <th>@Html.DisplayNameFor(p => p.MFGDate)</th>
             <th>@Html.DisplayNameFor(p => p.EXPDate)</th>
             <th>@Html.DisplayNameFor(p => p.StorageCondition)</th>
+         
             <th></th>
         </tr>
         </thead>
@@ -33,6 +34,7 @@
                 <td>@item.MFGDate</td>
                 <td>@item.EXPDate</td>
                 <td>@item.StorageCondition</td>
+                
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

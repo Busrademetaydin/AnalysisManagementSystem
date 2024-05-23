@@ -15,17 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Analysis\Details.cshtml" />
-    <Content Remove="Views\Drug\Details.cshtml" />
-    <Content Remove="Views\HPLCEquipment\Details.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MailKit" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -48,17 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Drug\Details.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Drug\Details.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Analysis\Details.cshtml" />
-    <None Include="Views\Drug\Details.cshtml" />
-    <None Include="Views\HPLCEquipment\Details.cshtml" />
     <None Include="wwwroot\assets\js\main.js" />
     <None Include="wwwroot\assets\vendor\bootstrap-icons\bootstrap-icons.scss" />
     <None Include="wwwroot\assets\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />

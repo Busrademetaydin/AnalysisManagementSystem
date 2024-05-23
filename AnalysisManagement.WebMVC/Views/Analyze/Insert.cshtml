@@ -1,0 +1,65 @@
+﻿@model AnalyzeInsertVM
+
+<h3>To insert a new analysis, fill out the information below.</h3>
+
+<div class="card">
+<div class="card-body">
+
+    <form action="Insert" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-2">
+                <label asp-for="StartDate" class="form-label">Start Date</label>
+                <input asp-for="StartDate" type="date" class="form-control" asp-format="{0:dd.MM.yyyy}">
+                <div class="text-danger"> <span asp-validation-for="StartDate"></span></div>
+
+            </div>
+            <div class="mb-2">
+                <label asp-for="EndDate" class="form-label">End Date</label>
+                <input asp-for="EndDate" type="date" class="form-control" asp-format="{0:dd.MM.yyyy}">
+                <div class="text-danger"> <span asp-validation-for="EndDate"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Description" class="form-label">Description</label>
+                <input asp-for="Description" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="Description"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="AnalyzeTypeId" class="form-label">Analyze Type Id</label>
+                <input asp-for="AnalyzeTypeId" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="AnalyzeTypeId"></span></div>
+        </div>
+
+        <div class="mb-2">
+                <label asp-for="AnalystId" class="form-label">Analyst Id</label>
+                <input asp-for="AnalystId" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="AnalystId"></span></div>
+         </div>
+            <div class="mb-2">
+                <label asp-for="EquipmentId" class="form-label">Equipment Id</label>
+                <input asp-for="EquipmentId" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="EquipmentId"></span></div>
+            </div>
+        <div class="mb-3">
+                <button class="btn btn-success" type="submit">Save</button>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+}
+
+
+

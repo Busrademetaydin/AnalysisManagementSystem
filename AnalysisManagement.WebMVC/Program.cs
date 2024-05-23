@@ -42,6 +42,11 @@ namespace AnalysisManagement.WebMVC
                 builder.Services.AddScoped<IAnalystManager, AnalystManager>();
                 builder.Services.AddScoped<IAnalyzeDetailManager, AnalyzeDetailManager>();
 
+
+
+
+
+
                 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = true;
@@ -50,15 +55,18 @@ namespace AnalysisManagement.WebMVC
                     options.Password.RequiredLength = 6;
                     options.Password.RequireNonAlphanumeric = false;
 
+
                     options.User.RequireUniqueEmail = true;
                     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                     options.SignIn.RequireConfirmedPhoneNumber = false;
                     options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedAccount = true;
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
                     options.Lockout.MaxFailedAccessAttempts = 5;
 
-                }).AddEntityFrameworkStores<AnalysisDbContext>();
+                }).AddEntityFrameworkStores<AnalysisDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
+
 
                 builder.Services.AddNotyf(config =>
                 {

@@ -1,5 +1,7 @@
 ﻿@model DrugUpdateVM
 
+
+
 <div class="card">
     <div class="card-header">
         <h3>Edit</h3>
@@ -49,6 +51,8 @@
                 <input asp-for="StorageCondition" class="form-control">
                 <div class="text-danger"> <span asp-validation-for="StorageCondition"></span></div>
             </div>
+
+
             <div class="mb-3">
                 <button class="btn btn-success" type="submit">Update</button>
             </div>

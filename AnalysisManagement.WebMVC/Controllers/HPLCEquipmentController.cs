@@ -62,9 +62,18 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View(equipment);
         }
 
+
         public ActionResult Details(int id)
         {
-            return View();
+            var equip = manager.GetByIdAsync(id).Result;
+
+            if (equip == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(equip);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -99,6 +108,30 @@ namespace AnalysisManagement.WebMVC.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        public async Task<IActionResult> DeleteAsync(int Id)
+        {
+            var equipment = await manager.GetByIdAsync(Id);
+
+            return View(equipment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int Id)
+        {
+            try
+            {
+                var equipment = await manager.GetByIdAsync(Id);
+                await manager.DeleteAsync(equipment);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+
             }
         }
     }

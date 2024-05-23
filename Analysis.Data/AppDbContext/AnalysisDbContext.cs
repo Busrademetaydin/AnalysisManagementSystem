@@ -8,6 +8,8 @@ namespace Analysis.Data.AppDbContext
 {
     public class AnalysisDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
+
+
         public AnalysisDbContext()
         {
 
@@ -26,8 +28,7 @@ namespace Analysis.Data.AppDbContext
 
         public DbSet<AnalyzeType> AnalyzeTypes { get; set; }
 
-
-
+        public DbSet<ContactMessage> ContactMessages { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

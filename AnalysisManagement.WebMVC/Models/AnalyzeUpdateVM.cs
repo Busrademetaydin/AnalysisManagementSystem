@@ -4,7 +4,8 @@ namespace AnalysisManagement.WebMVC.Models
 {
     public class AnalyzeUpdateVM
     {
-        public int AnalyzeId { get; set; }
+        public int Id { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Analizin başlama tarihi belirtilmelidir")]
         public DateOnly StartDate { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Analizin sona erme tarihi belirtilmelidir")]
@@ -23,3 +24,6 @@ namespace AnalysisManagement.WebMVC.Models
     }
 
 }
+
+
+

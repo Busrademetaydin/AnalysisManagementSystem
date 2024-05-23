@@ -2,6 +2,7 @@
 using AnalysisManagement.WebMVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
@@ -26,6 +27,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Index(LoginVM loginVM)
         {
             if (!ModelState.IsValid)
@@ -49,7 +51,7 @@ namespace AnalysisManagement.WebMVC.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Drug");
+                return RedirectToAction("Index", "Home");
             }
 
 
@@ -62,6 +64,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             if (!ModelState.IsValid)
@@ -85,43 +88,51 @@ namespace AnalysisManagement.WebMVC.Controllers
                 ModelState.AddModelError("", error.Description);
                 return View(registerVM);
             }
+            var code = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
+            StringBuilder message = new();
 
-            //// Rollerin var olup olmadığını kontrol edin ve yoksa oluşturun
-            //    string[] rolesToCreate = { "Analyst", "Admin", "Editor" }; // İstediğiniz rolleri buraya ekleyin
+            message.AppendLine("<html>");
+            message.AppendLine("<head>")
+                .AppendLine("<meta charset='UTF-8'")
+                .AppendLine("</head>"); message.AppendLine($"<p> Hello {appUser.UserName} </p> <br>");
 
-            //    foreach (var roleName in rolesToCreate)
-            //    {
-            //        if (await roleManager.FindByNameAsync(roleName) == null)
-            //        {
-            //            await roleManager.CreateAsync(new IdentityRole(roleName));
-            //        }
-            //    }
+            message.AppendLine("<p> Click the link below to complete the membership process. </p>");
 
-            //    // Kullanıcıyı rollerle ilişkilendirin
-            //    var result2 = await userManager.AddToRoleAsync(appUser, "Analyst");
+            message.AppendLine($"<a href='http://localhost:7006/ConfirmEmail?uid={appUser.Id}&code={code}'> Confirm </a>");
 
-            //    if (result2.Succeeded)
-            //    {
-            //        return RedirectToAction("Index", "Drug");
-            //    }
 
-            //    return View(registerVM);
-            //}
+            message.AppendLine("</body>");
 
-            //Evet, birden fazla role tanımlayabilirsiniz.
-            //AddToRoleAsync yöntemini birden fazla kez çağırarak kullanıcıya
-            //birden fazla rol atayabilirsiniz.Örneğin:
 
-            //var result2 = await userManager.AddToRoleAsync(appUser, "Analyst");
-            //var result3 = await userManager.AddToRoleAsync(appUser, "Admin");
-            //var result4 = await userManager.AddToRoleAsync(appUser, "Editor");
+            message.AppendLine("</html>");
 
-            //if (result2.Succeeded && result3.Succeeded && result4.Succeeded)
-            //{
-            //    return RedirectToAction("Index", "Drug");
-            //}
+            EmailHelper emailHelper = new EmailHelper();
+            bool sonuc = await emailHelper.SendEmail(appUser.Email, message.ToString());
 
-            //return View(registerVM);
+            if (sonuc)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "An error occurred while sending an e-mail.");
+                return View(registerVM);
+            }
+
+
+
+
+            string[] rolesToCreate = { "Admin", "Editor" };
+
+            foreach (var roleName in rolesToCreate)
+            {
+                if (await roleManager.FindByNameAsync(roleName) == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+
 
             if (await roleManager.FindByNameAsync("Analyst") == null)
             {
@@ -139,6 +150,34 @@ namespace AnalysisManagement.WebMVC.Controllers
             return View(registerVM);
 
 
+        }
+
+        [Route("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string uid, string code)
+        {
+            ConfirmEmailModel model = new();
+
+            if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(code))
+            {
+                var appUser = await userManager.FindByIdAsync(uid);
+                code = code.Replace(' ', '+');
+                model.Email = appUser.Email;
+                var result = await userManager.ConfirmEmailAsync(appUser, code);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    var error = result.Errors.FirstOrDefault();
+                    model.ErrorDescription = error.Description;
+                    model.HasError = true;
+                    ModelState.AddModelError("", error.Description);
+                    return View(model);
+                }
+            }
+            return View();
         }
 
     }

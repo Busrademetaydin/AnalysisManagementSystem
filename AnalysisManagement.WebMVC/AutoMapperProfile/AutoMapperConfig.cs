@@ -12,6 +12,8 @@ namespace AnalysisManagement.WebMVC.AutoMapperProfile
             CreateMap<DrugUpdateVM, Drug>().ReverseMap();
             CreateMap<HPLCEquipmentInsertVM, HPLCEquipment>().ReverseMap();
             CreateMap<HPLCEquipmentUpdateVM, HPLCEquipment>().ReverseMap();
+            CreateMap<AnalyzeInsertVM, Analyze>().ReverseMap();
+            CreateMap<AnalyzeUpdateVM, Analyze>().ReverseMap();
         }
     }
 }

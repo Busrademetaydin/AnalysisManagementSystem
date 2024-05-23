@@ -299,6 +299,35 @@ namespace Analysis.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Analysis.Entities.Concrete.ContactMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactMessages");
+                });
+
             modelBuilder.Entity("Analysis.Entities.Concrete.Drug", b =>
                 {
                     b.Property<int>("Id")
@@ -417,34 +446,30 @@ namespace Analysis.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
+                    
                     b.ToTable("AspNetRoles", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = "4100745e-bfb2-4bbc-a743-5e6443eff2fe",
-                            ConcurrencyStamp = "1",
-                            Name = "Analyst",
-                            NormalizedName = "Analyst"
+                            Id = "",
+                            ConcurrencyStamp = "",
+                            Name = "",
+                            NormalizedName = "t"
                         },
                         new
                         {
-                            Id = "99e52313-7995-4597-addf-9818c358617a",
-                            ConcurrencyStamp = "2",
-                            Name = "Supervisor",
-                            NormalizedName = "Supervisor"
+                            Id = "",
+                            ConcurrencyStamp = "",
+                            Name = "",
+                            NormalizedName = ""
                         },
                         new
                         {
-                            Id = "ef51ffc0-477d-4464-bdb4-627543a186c2",
-                            ConcurrencyStamp = "3",
-                            Name = "Manager",
-                            NormalizedName = "Manager"
+                            Id = "",
+                            ConcurrencyStamp = "",
+                            Name = "",
+                            NormalizedName = ""
                         });
                 });
 
