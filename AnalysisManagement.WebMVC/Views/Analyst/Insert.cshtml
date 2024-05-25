@@ -1,1 +1,70 @@
-﻿
+﻿@model AnalystInsertVM
+
+<h3>To insert a new analysis, fill out the information below.</h3>
+
+<div class="card">
+    <div class="card-body">
+
+        <form action="Insert" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-2">
+                <label asp-for="FirstName" class="form-label">First Name</label>
+                <input asp-for="FirstName" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="FirstName"></span></div>
+
+            </div>
+            <div class="mb-2">
+                <label asp-for="LastName" class="form-label">Last Name</label>
+                <input asp-for="LastName"  class="form-control">
+                <div class="text-danger"> <span asp-validation-for="LastName"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Gender" class="form-label">Gender</label>
+                <input asp-for="Gender" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="Gender"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="IdentificationNumber" class="form-label">Identification Number</label>
+                <input asp-for="IdentificationNumber" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="IdentificationNumber"></span></div>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" type="email">
+                <div class="text-danger"> <span asp-validation-for="Email"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Phone" class="form-label">Phone</label>
+                <input asp-for="Phone" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="Phone"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Title" class="form-label">Title</label>
+                <input asp-for="Title" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="Title"></span></div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+}
+
+
+

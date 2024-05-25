@@ -1,4 +1,5 @@
-﻿﻿@using Microsoft.AspNetCore.Identity
+﻿
+﻿@using Microsoft.AspNetCore.Identity
 
 
 <!DOCTYPE html>
@@ -12,9 +13,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AnalysisManagement.WebMVC.styles.css" asp-append-version="true" />
 
-  
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -34,57 +35,66 @@
                     <ul class="navbar-nav flex-grow-1">
                       
                     
-                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin"))
+                        @if (SignInManager.IsSignedIn(User))
                         {
+                            var user = await UserManager.GetUserAsync(User);
+                            var isAdmin = await UserManager.IsInRoleAsync(user, "Admin");
+                            var isAnalyst = await UserManager.IsInRoleAsync(user, "Analyst");
 
-                            @*  <li class="nav-item dropdown">
-                                <a id="analyzesDropdown" class="dropdown-toggle nav-link text-dark" href="#" aria-haspopup="true" aria-expanded="false">Analyzes</a>
-                                <ul class="dropdown-menu" aria-labelledby="analyzesDropdown">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Analyze" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Drug" asp-action="Index"><i class="fas fa-users mr-2"></i>Users to Category</a></li>
-                                    <li><div class="dropdown-divider"></div></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a></li>
-                                </ul>
-                            </li> *@
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
-                            </li>
+                            if (isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
+                                </li>
                             }
-
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                            </li>
+                            else if (isAnalyst)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                                </li>
+                            }
                         }
+                       
 
                     </ul>
                     </div>
@@ -136,22 +146,8 @@
                 document.getElementById("logoutForm").submit();
             }
         });
-        // $(document).ready(function () {
-        //     $('.dropdown-toggle').click(function (e) {
-        //         var $dropdownMenu = $(this).next('.dropdown-menu');
-        //         $dropdownMenu.toggleClass('show');
-        //     });
-
-        //     // Belgeye herhangi bir yere tıklandığında alt menüyü kapat
-        //     $(document).click(function (event) {
-        //         if (!$(event.target).closest('.dropdown').length) {
-        //             $('.dropdown-menu').removeClass('show');
-        //         }
-        //     });
-        // });
+       
     </script>
-   
-    
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
