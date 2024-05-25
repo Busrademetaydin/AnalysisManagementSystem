@@ -1,65 +1,261 @@
-﻿@* ﻿﻿ @{
-    viewdata["title"] = "home page";
-} *@
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="text-center">
-    <h1 class="display-4">welcome</h1>
-    <p>learn about <a href="https://learn.microsoft.com/aspnet/core">building web apps with asp.net core</a>.</p>
-</div>
-@*  ﻿@{
-    viewdata["title"] = "home page";
-} *@
+<head>
 
-<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">free</h4>
+
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"]DEM Laboratory</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AnalysisManagement.WebMVC.styles.css" asp-append-version="true" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    @*
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    @*  <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> *@
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: EstateAgency
+    * Template URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+    * Updated: Mar 17 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+            <div class="container">
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DEM Laboratory</a> *@
+                <a class="navbar-brand text-brand" asp-controller="Home" asp-action="Index">DEM<span class="color-b">Laboratory</span></a>
+               @*  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> *@
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                @inject SignInManager<AppUser> SignInManager
+                @inject UserManager<AppUser> UserManager
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+
+                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin"))
+                        {
+
+                            @*  <li class="nav-item dropdown">
+                        <a id="analyzesDropdown" class="dropdown-toggle nav-link text-dark" href="#" aria-haspopup="true" aria-expanded="false">Analyzes</a>
+                        <ul class="dropdown-menu" aria-labelledby="analyzesDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Analyze" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Drug" asp-action="Index"><i class="fas fa-users mr-2"></i>Users to Category</a></li>
+                        <li><div class="dropdown-divider"></div></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a></li>
+                        </ul>
+                        </li> *@
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <div class="nav-item">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="rounded-circle text-center mb-2" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                <span id="userInitial">@Html.Raw((User.Identity.Name?[0].ToString().ToUpper()))</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="nav-link" href="@Url.Action("Index", "Login")">
+                            <i class="fa-solid fa-user" style="color:darkmagenta"></i>
+                            <span style="color: black;">Login</span>
+                            <br /> 
+                        </a>
+                    }
+                </div>
             </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$0<small class="text-body-secondary fw-light">/mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 gb of storage</li>
-                    <li>email support</li>
-                    <li>help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-outline-primary">sign up for free</button>
+
+            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
+                <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
+            </form>
+        </nav>
+    </header>
+    <main id="main">
+    <!-- ======= Intro Section ======= -->
+    <div class="intro intro-carousel swiper position-relative">
+
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url(assets/img/slide-1.jpg)">
+                <div class="overlay overlay-a"></div>
+                <div class="intro-content display-table">
+                    <div class="table-cell">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="intro-body">
+                                        <p class="intro-title-top">
+                                                Shimadzu provides a range of liquid chromatography systems
+                                                <br>  from HPLC to UHPLC, preparative systems, and more.
+                                        </p>
+                                        <h1 class="intro-title mb-4 ">
+                                                <span class="color-b"> </span> An  high-quality  HPLC system
+                                                <br> to fast-track you to highest efficiency.
+                                        </h1>
+                                        <p class="intro-subtitle intro-price">
+                                                <a href="#"><span class="price-a"> Reliable |  Results</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url(assets/img/800px-Agilent1200HPLC.jpg)">
+                <div class="overlay overlay-a"></div>
+                <div class="intro-content display-table">
+                    <div class="table-cell">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="intro-body">
+                                        <p class="intro-title-top">
+                                                HPLC & UHPLC
+                                                <br> Systems
+                                        </p>
+                                        <h1 class="intro-title mb-4">
+                                                <span class="color-b"></span> HPLC System for
+                                                <br> high-efficiency LC separations and quality data
+                                        </h1>
+                                        <p class="intro-subtitle intro-price">
+                                            <a href="#"><span class="price-a">Saving | Time</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url(assets/img/slide-3.jpg)">
+                <div class="overlay overlay-a"></div>
+                <div class="intro-content display-table">
+                    <div class="table-cell">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="intro-body">
+                                        <p class="intro-title-top">
+                                                Alliance HPLC System,
+                                                <br> ideal for HPLC methods development and routine LC analysis.
+                                        </p>
+                                        <h1 class="intro-title mb-4">
+                                                <span class="color-b"> </span> Laboratory performance
+                                                <br> optimizing method development
+                                        </h1>
+                                        <p class="intro-subtitle intro-price">
+                                                <a href="#"><span class="price-a">Innovative  | chemistries and technologies</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">pro</h4>
+        <div class="swiper-pagination"></div>
+    </div><!-- End Intro Section -->
+        <footer class="border-top footer text-muted d-flex justify-content-center align-items-center" style="height: 10px;">
+            <div class="container d-flex justify-content-center align-items-center">
+                <p class="copyright color-text-a">
+                    &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved.
+                </p>
             </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$15<small class="text-body-secondary fw-light">/mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>20 users included</li>
-                    <li>10 gb of storage</li>
-                    <li>priority email support</li>
-                    <li>help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-primary">get started</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm border-primary">
-            <div class="card-header py-3 text-bg-primary border-primary">
-                <h4 class="my-0 fw-normal">enterprise</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$29<small class="text-body-secondary fw-light">/mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>30 users included</li>
-                    <li>15 gb of storage</li>
-                    <li>phone and email support</li>
-                    <li>help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-primary">contact us</button>
-            </div>
-        </div>
-    </div>
-</div> 
+        </footer>
+    </main><!-- End #main -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    @* <script src="assets/vendor/php-email-form/validate.js"></script> *@
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

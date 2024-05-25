@@ -21,7 +21,7 @@ namespace AnalysisManagement.WebMVC.Controllers
 
         public IActionResult Index()
         {
-            //var result = dbcontext.Role.ToList();
+
             return View();
         }
 
@@ -31,6 +31,11 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Services()
         {
             return View();
         }

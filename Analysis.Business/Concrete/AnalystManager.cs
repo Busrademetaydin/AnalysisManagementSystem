@@ -22,12 +22,6 @@ namespace Analysis.Business.Concrete
         public override async Task<int> InsertAsync(Analyst entity)
         {
 
-            if (!entity.Email.EndsWith("@tobiopharma.com"))
-            {
-
-                throw new Exception("Geçersiz bir email adresi girdiniz. Lütfen tobiopharma domainine sahip email adresi girin.");
-            }
-
             if (entity.IdentificationNumber.Length != 11)
             {
 

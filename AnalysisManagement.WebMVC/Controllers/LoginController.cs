@@ -51,10 +51,18 @@ namespace AnalysisManagement.WebMVC.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                var roles = await userManager.GetRolesAsync(user);
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
-
+            ModelState.AddModelError("", "Login failed. Please try again.");
             return View(loginVM);
         }
         public IActionResult Register()
@@ -87,6 +95,11 @@ namespace AnalysisManagement.WebMVC.Controllers
                 var error = result.Errors.FirstOrDefault();
                 ModelState.AddModelError("", error.Description);
                 return View(registerVM);
+            }
+            else
+            {
+                await signInManager.SignInAsync(appUser, isPersistent: false);
+                return RedirectToAction("Index", "Home");
             }
             var code = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
             StringBuilder message = new();

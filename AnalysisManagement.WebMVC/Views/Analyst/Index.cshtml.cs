@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AnalysisManagement.WebMVC.Views.Drug
+namespace AnalysisManagement.WebMVC.Views.Analyst
 {
-    public class Index5Model : PageModel
+    public class GetAnalystsModel1 : PageModel
     {
         public void OnGet()
         {

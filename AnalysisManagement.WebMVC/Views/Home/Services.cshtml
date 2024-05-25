@@ -1,4 +1,254 @@
-﻿@page
-@model AnalysisManagement.WebMVC.Views.Home.LaboratoriesModel
+﻿@using Microsoft.AspNetCore.Identity
 @{
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DEM Laboratory</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @inject SignInManager<AppUser> SignInManager
+                @inject UserManager<AppUser> UserManager
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+
+                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin"))
+                        {
+
+                            @*  <li class="nav-item dropdown">
+                        <a id="analyzesDropdown" class="dropdown-toggle nav-link text-dark" href="#" aria-haspopup="true" aria-expanded="false">Analyzes</a>
+                        <ul class="dropdown-menu" aria-labelledby="analyzesDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Analyze" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Drug" asp-action="Index"><i class="fas fa-users mr-2"></i>Users to Category</a></li>
+                        <li><div class="dropdown-divider"></div></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a></li>
+                        </ul>
+                        </li> *@
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <div class="nav-item">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="rounded-circle text-center mb-2" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                <span id="userInitial">@Html.Raw((User.Identity.Name?[0].ToString().ToUpper()))</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="nav-link" href="@Url.Action("Index", "Login")">
+                            <i class="fa-solid fa-user" style="color:darkmagenta"></i>
+                            <span style="color: black;">Login</span>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
+                <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
+            </form>
+        </nav>
+    </header>
+    <main id="main">
+
+        <section class="section-services section-t8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-wrap d-flex justify-content-between">
+                            <div class="title-box">
+                                <h2 class="title-a">Our Services</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card-box-c foo">
+                            <div class="card-header-c d-flex">
+                                <div class="card-box-ico">
+                                    <span class="bi bi-capsule"></span>
+                                </div>
+                                <div class="card-title-c align-self-center">
+                                    <h2 class="title-c"> Method Validation</h2>
+                                </div>
+                            </div>
+                            <div class="card-body-c">
+                                <p class="content-c">
+                                    The concept of validation has expanded through the years to embrace a wide 
+                                    range of activities from analytical methods used for the quality control of drug substances 
+                                    and drug products to computerized systems for clinical trials, labeling or process control, 
+                                    Validation is founded on, but not prescribed by regulatory requirements and is best viewed as 
+                                    an important and integral part of cGMP. The word validation simply means assessment of validity 
+                                    or action of proving effectiveness.Validation is a team effort where it involves people from various 
+                                    disciplines of the plant.
+                                </p>
+                            </div>
+                           @*  <div class="card-footer-c">
+                                <a href="#" class="link-c link-icon">
+                                    Read more
+                                    <span class="bi bi-chevron-right"></span>
+                                </a>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-box-c foo">
+                            <div class="card-header-c d-flex">
+                                <div class="card-box-ico">
+                                    <span class="bi bi-capsule-pill"></span>
+                                </div>
+                                <div class="card-title-c align-self-center">
+                                    <h2 class="title-c">Stability Analysis</h2>
+                                </div>
+                            </div>
+                            <div class="card-body-c">
+                                <p class="content-c">
+                                    If an analyte is stable, then the concentration remains the same in time e. g. 100%. 
+                                    If an analyte degrades with time, then its concentration is decreased and also the stability is lower than 100%.
+
+                                    Decomposition usually leads to a decrease in analyte content. However, in the case of analysis of decomposition products, 
+                                    degradation can lead to an increase in the analyte content.
+
+                                    If an analyte is unstable, its decomposition influences the trueness and precision (since both systematic and random 
+                                    effects are usually involved) of the procedure and is, thus, indirectly accounted for by these two parameters. It is 
+                                    nevertheless useful to handle analyte stability separately from trueness and precision.
+                                </p>
+                            </div>
+                           @*  <div class="card-footer-c">
+                                <a href="#" class="link-c link-icon">
+                                    Read more
+                                    <span class="bi bi-calendar4-week"></span>
+                                </a>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-box-c foo">
+                            <div class="card-header-c d-flex">
+                                
+                                <div class="card-box-ico">
+                                    <span class="bi bi-eyedropper"></span>
+                                </div>
+                                <div class="card-title-c align-self-center">
+                                    <h2 class="title-c">Physical Analysis</h2>
+                                </div>
+                               
+                            </div>
+                            <div class="card-body-c">
+                                <p class="content-c">
+                                    The physical property of a material is one that can be observed and measured 
+                                    without changing its chemical identity. The measurement of a physical property can change 
+                                    the order of the substance in the material sample, but does not change the structure of its molecules.
+                                    That is, a physical property may include a physical change, but not a chemical change. 
+                                    If a chemical change or reaction occurs, the observed properties are residual chemical properties.
+
+                                    In this context, a material's hardness, disintegration, dimensions, appearance, color, odor, viscosity, 
+                                    melting point, boiling point, thermal conductivity, friability, weight 
+                                    uniformity and specific gravity properties are always put there by physical analysis.
+                                </p>
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Services Section -->
+        
+       @*  <footer class="border-top footer text-muted d-flex justify-content-center align-items-center">
+            <div class="container d-flex justify-content-center align-items-center">
+                <p class="copyright color-text-a">
+                    &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved.
+                </p>
+               
+            </div>
+        </footer> *@
+        <footer class="border-top footer text-muted d-flex justify-content-center align-items-center" style="height: 10px;">
+            <div class="container d-flex justify-content-center align-items-center">
+                <p class="copyright color-text-a">
+                    &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved.
+                </p>
+            </div>
+        </footer>
+    </main><!-- End #main -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    @*  <script src="~/assets/vendor/php-email-form/validate.js"></script> *@
+
+
+    <!-- Template Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+
+</html>

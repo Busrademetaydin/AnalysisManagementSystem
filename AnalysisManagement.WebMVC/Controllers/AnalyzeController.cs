@@ -56,7 +56,7 @@ namespace AnalysisManagement.WebMVC.Controllers
             {
                 Analyze analysis = new Analyze()
                 {
-                    //Id = analyze.AnalyzeId,
+
 
                     AnalyzeTypeId = analyze.AnalyzeTypeId,
                     AnalystId = analyze.AnalystId,

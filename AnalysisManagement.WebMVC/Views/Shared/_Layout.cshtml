@@ -27,20 +27,17 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                @inject SignInManager<AppUser> SignInManager
+                @inject UserManager<AppUser> UserManager
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                        </li>
-                        @inject SignInManager<AppUser> SignInManager
-                        @inject UserManager<AppUser> UserManager
-                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Supervisor"))
+                      
+                    
+                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin"))
                         {
-                         
-                            <li class="nav-item dropdown">
+
+                            @*  <li class="nav-item dropdown">
                                 <a id="analyzesDropdown" class="dropdown-toggle nav-link text-dark" href="#" aria-haspopup="true" aria-expanded="false">Analyzes</a>
                                 <ul class="dropdown-menu" aria-labelledby="analyzesDropdown">
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Analyze" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a></li>
@@ -48,24 +45,49 @@
                                     <li><div class="dropdown-divider"></div></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a></li>
                                 </ul>
+                            </li> *@
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
+                            </li>
+                            }
+
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                         }
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                        </li>
-                        
                     </ul>
-
+                    </div>
                     <div class="nav-item">
 
                         @if (User.Identity.IsAuthenticated)
@@ -85,6 +107,10 @@
                         }
                     </div>
                 </div>
+
+            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
+                <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
+            </form>
         </nav>
     </header>
     <div class="container">
@@ -98,14 +124,11 @@
             <p class="copyright color-text-a">
                 &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved.
             </p>
-            @* &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved. <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+            
         </div>
     </footer>
 
 
-    <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
-        <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
-    </form>
     <script>
         document.getElementById("userInitial").addEventListener("click", function (event) {
             event.preventDefault();
@@ -113,19 +136,19 @@
                 document.getElementById("logoutForm").submit();
             }
         });
-        $(document).ready(function () {
-            $('.dropdown-toggle').click(function (e) {
-                var $dropdownMenu = $(this).next('.dropdown-menu');
-                $dropdownMenu.toggleClass('show');
-            });
+        // $(document).ready(function () {
+        //     $('.dropdown-toggle').click(function (e) {
+        //         var $dropdownMenu = $(this).next('.dropdown-menu');
+        //         $dropdownMenu.toggleClass('show');
+        //     });
 
-            // Belgeye herhangi bir yere tıklandığında alt menüyü kapat
-            $(document).click(function (event) {
-                if (!$(event.target).closest('.dropdown').length) {
-                    $('.dropdown-menu').removeClass('show');
-                }
-            });
-        });
+        //     // Belgeye herhangi bir yere tıklandığında alt menüyü kapat
+        //     $(document).click(function (event) {
+        //         if (!$(event.target).closest('.dropdown').length) {
+        //             $('.dropdown-menu').removeClass('show');
+        //         }
+        //     });
+        // });
     </script>
    
     

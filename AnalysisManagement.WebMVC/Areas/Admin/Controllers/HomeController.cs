@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
 
-namespace AnalysisManagement.WebMVC.Areas.Admin.Controllers
-{
-    [Area("Admin")]
+//namespace AnalysisManagement.WebMVC.Areas.Admin.Controllers
+//{
+//    [Area("Admin")]
+//    [Authorize(Roles = "Admin")]
 
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
-}
+//    public class HomeController : Controller
+//    {
+//        public IActionResult Index()
+//        {
+//            return View();
+//        }
+//    }
+//}

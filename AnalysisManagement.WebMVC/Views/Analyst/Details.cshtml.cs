@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AnalysisManagement.WebMVC.Views.Drug
 {
-    public class Index5Model : PageModel
+    public class DetailsModel : PageModel
     {
         public void OnGet()
         {

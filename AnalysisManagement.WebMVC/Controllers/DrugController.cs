@@ -28,7 +28,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
 
-        [Authorize(Roles = "Supervisor")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> InsertAsync()
         {
             DrugInsertVM drug = new();

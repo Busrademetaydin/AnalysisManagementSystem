@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Analyst>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Drugs</h3>
+<a asp-action="Insert" class="btn btn-success mb-3">Insert a new analyst</a>
+<table class="table table-active id="sidebar-overlay">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(p => p.Id)</th>
+            <th>@Html.DisplayNameFor(p => p.FirstName)</th>
+            <th>@Html.DisplayNameFor(p => p.LastName)</th>
+            <th>@Html.DisplayNameFor(p => p.Gender)</th>
+            <th>@Html.DisplayNameFor(p => p.IdentificationNumber)</th>
+            <th>@Html.DisplayNameFor(p => p.Phone)</th>
+            <th>@Html.DisplayNameFor(p => p.Email)</th>
+            <th>@Html.DisplayNameFor(p => p.Title)</th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Gender</td>
+                <td>@item.IdentificationNumber</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>@item.Title</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

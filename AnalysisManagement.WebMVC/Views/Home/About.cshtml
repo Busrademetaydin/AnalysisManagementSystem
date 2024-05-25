@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -15,6 +20,100 @@
  
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DEM Laboratory</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @inject SignInManager<AppUser> SignInManager
+                @inject UserManager<AppUser> UserManager
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+
+                        @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin"))
+                        {
+
+                            @*  <li class="nav-item dropdown">
+                        <a id="analyzesDropdown" class="dropdown-toggle nav-link text-dark" href="#" aria-haspopup="true" aria-expanded="false">Analyzes</a>
+                        <ul class="dropdown-menu" aria-labelledby="analyzesDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Analyze" asp-action="Index"><i class="fas fa-box mr-2"></i>Categories</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Drug" asp-action="Index"><i class="fas fa-users mr-2"></i>Users to Category</a></li>
+                        <li><div class="dropdown-divider"></div></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="HPLCEquipments" asp-action="Index"><i class="fas fa-file-video mr-2"></i>Media Types</a></li>
+                        </ul>
+                        </li> *@
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeType" asp-action="Index">Analyze Types</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HPLCEquipment" asp-action="Index">Equipments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <div class="nav-item">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="rounded-circle text-center mb-2" style="width: 40px; height: 40px; background-color: darkmagenta; color: white; line-height: 40px;">
+                                <span id="userInitial">@Html.Raw((User.Identity.Name?[0].ToString().ToUpper()))</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="nav-link" href="@Url.Action("Index", "Login")">
+                            <i class="fa-solid fa-user" style="color:darkmagenta"></i>
+                            <span style="color: black;">Login</span>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">
+                <button type="submit" id="logoutButton" class="btn btn-link">Logout</button>
+            </form>
+        </nav>
+    </header>
 <main id="main">
     <!-- ======= Intro Single ======= -->
     <section class="intro-single">
@@ -205,26 +304,25 @@
             </div>
         </div>
     </section><!-- End About Section-->
-        <footer class="border-top footer text-muted d-flex justify-content-center align-items-center">
+        <footer class="border-top footer text-muted d-flex justify-content-center align-items-center" style="height: 10px;">
             <div class="container d-flex justify-content-center align-items-center">
                 <p class="copyright color-text-a">
                     &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved.
                 </p>
-                @* &copy; @DateTime.Now.Year - Copyright DEM Laboratory All Rights Reserved. <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
             </div>
         </footer>
-</main><!-- End #main -->
+    </main><!-- End #main -->
 
-<div id="preloader"></div>
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
+    <!-- Vendor JS Files -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-   @*  <script src="~/assets/vendor/php-email-form/validate.js"></script> *@
+    @*  <script src="~/assets/vendor/php-email-form/validate.js"></script> *@
 
 
-<!-- Template Main JS File -->
+    <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
 
 </body>

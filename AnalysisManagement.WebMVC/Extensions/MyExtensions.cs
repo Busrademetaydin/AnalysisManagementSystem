@@ -14,7 +14,7 @@ namespace AnalysisManagement.WebMVC.Extensions
                 options.Cookie.Name = "AnalysisCookie";
                 options.LoginPath = "/Login/Index";
                 options.LogoutPath = "/Account/Logout";
-                options.AccessDeniedPath = "/Account/Yasak";
+                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.Cookie.HttpOnly = true; //Tarayicidaki diger scriptler okuyamasin
                 options.Cookie.SameSite = SameSiteMode.Strict; // Bizim tarayicimiz disinda kullanilamasin
 
