@@ -48,13 +48,13 @@ namespace AnalysisManagement.WebMVC.Controllers
             }
 
             var result = await signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
-            var reult2 = await userManager.AddToRoleAsync(user, "admin");
+
             if (result.Succeeded)
             {
                 var roles = await userManager.GetRolesAsync(user);
                 if (roles.Contains("Admin"))
                 {
-                    //return RedirectToAction("Index", "Home", new { area = "Admin" });
+
                     return RedirectToAction("Index", "Drug");
                 }
                 else
@@ -99,9 +99,20 @@ namespace AnalysisManagement.WebMVC.Controllers
             }
             else
             {
+                var usersCount = userManager.Users.Count();
+                if (usersCount == 1)
+                {
+                    await userManager.AddToRoleAsync(appUser, "Admin");
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(appUser, "User");
+                }
                 await signInManager.SignInAsync(appUser, isPersistent: false);
                 return RedirectToAction("Index", "Login");
             }
+
+
             var code = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
             StringBuilder message = new();
 
