@@ -6,40 +6,39 @@ namespace Analysis.Business.Concrete
 {
     public class AnalyzeDetailManager : ManagerBase<AnalyzeDetail, int, AnalysisDbContext>, IAnalyzeDetailManager
     {
-        public void SetLimit(AnalyzeDetail analyzeDetail, int limit, string analysisType)
+        public void SetLimit(AnalyzeDetail analyzeDetail, double limit, string analysisType)
         {
 
             if (limit < 0)
             {
-                throw new ArgumentException("Limit değeri negatif olamaz.");
+                throw new ArgumentException("The limit can not be negative.");
             }
 
             switch (analysisType.ToLower())
             {
                 case "assay":
-                    // Assay analizleri için limit aralığı %95-105
                     if (0.95 < limit && limit < 1.05)
                     {
-                        throw new ArgumentOutOfRangeException("Assay analizleri için limit değeri %95 ile %105 arasında olmalıdır.");
+                        throw new ArgumentOutOfRangeException("The limit value for assay should be between 95% and 105%.");
                     }
                     break;
                 case "dissolution":
-                    // Dissolüsyon analizleri için limit %80 üzeri
+
                     if (limit > 0.8)
                     {
-                        throw new ArgumentOutOfRangeException("Dissolüsyon analizleri için limit değeri %80'in üzerinde olmalıdır.");
+                        throw new ArgumentOutOfRangeException("The limit value for dissolution tests must be above 80%.");
                     }
                     break;
                 case "impurity" or "enantiomer":
-                    // Safsızlık ve enantiyomer analizleri için limit 
+
                     if (limit < 0.001 || limit < 0.0015)
                     {
-                        throw new ArgumentOutOfRangeException("Safsızlık ve enantiyomer analizleri için limit değeri %0.10 veya %0.15 den az olmalıdır.");
+                        throw new ArgumentOutOfRangeException("The limit value for impurity and enantiomer analysis should be less than 0.10% or 0.15%.");
                     }
                     break;
                 default:
                     {
-                        throw new ArgumentException("Geçersiz bir analiz türü girdiniz");
+                        throw new ArgumentException("You entered an invalid analysis type.");
                     }
                     break;
 

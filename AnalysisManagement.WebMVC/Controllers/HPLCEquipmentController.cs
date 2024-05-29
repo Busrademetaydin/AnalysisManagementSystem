@@ -1,12 +1,15 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Entities.Concrete;
-using AnalysisManagement.WebMVC.Models;
+using AnalysisManagement.WebMVC.Models.Entity;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
+
+    [Authorize]
     public class HPLCEquipmentController : Controller
     {
         private readonly IHPLCEquipmentManager manager;

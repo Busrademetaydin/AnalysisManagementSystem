@@ -54,7 +54,7 @@ namespace Analysis.Business.Concrete
 
         public virtual async Task<T> GetByIdAsync(TId id)
         {
-            return _repository.GetByIdAsync(id).Result;
+            return await _repository.GetByIdAsync(id);
         }
 
 

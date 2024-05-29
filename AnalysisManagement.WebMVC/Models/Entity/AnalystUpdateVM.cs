@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AnalysisManagement.WebMVC.Models
+namespace AnalysisManagement.WebMVC.Models.Entity
 {
-    public class AnalystInsertVM
+    public class AnalystUpdateVM
     {
-
+        public int Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Analistin adı belirtilmelidir")]
         public string FirstName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Analistin soyadı belirtilmelidirr")]

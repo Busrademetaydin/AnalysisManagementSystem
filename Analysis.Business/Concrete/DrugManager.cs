@@ -9,14 +9,14 @@ namespace Analysis.Business.Concrete
     {
         public bool CheckBatchNo(string batchNo)
         {
-            // Aynı ürün batch numarasına sahip bir ilaç var mı kontrol 
+
             var existingDrug = _repository.Get(d => d.BatchNo == batchNo).Result;
             return existingDrug != null;
         }
 
         public bool CheckProductCode(string productCode)
         {
-            // Aynı ürün koduna sahip bir ilaç var mı kontrol
+
             var existingDrug = _repository.Get(d => d.ProductCode == productCode).Result;
             return existingDrug != null;
         }
@@ -25,12 +25,12 @@ namespace Analysis.Business.Concrete
 
             if (CheckProductCode(entity.ProductCode))
             {
-                throw new Exception("Aynı ürün koduna sahip ilaç zaten mevcut.");
+                throw new Exception("The drug with the same product code already exists.");
             }
 
             if (CheckBatchNo(entity.BatchNo))
             {
-                throw new Exception("Aynı ürün batch numarasına sahip ilaç zaten mevcut.");
+                throw new Exception("The drug with the same product batch number already exists.");
             }
 
 

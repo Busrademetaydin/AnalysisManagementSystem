@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AnalysisManagement.WebMVC.Models
+namespace AnalysisManagement.WebMVC.Models.Entity
 {
-    public class DrugInsertVM
+    public class DrugUpdateVM
     {
-
-
+        public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bitmiş ürün kodu boş bırakılamaz.")]
         [MaxLength(20, ErrorMessage = "20 karakterden fazla kod içermemelidir.")]
@@ -28,3 +27,5 @@ namespace AnalysisManagement.WebMVC.Models
         public string StorageCondition { get; set; }
     }
 }
+
+

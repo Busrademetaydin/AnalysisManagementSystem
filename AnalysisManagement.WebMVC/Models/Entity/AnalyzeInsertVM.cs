@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AnalysisManagement.WebMVC.Models
+namespace AnalysisManagement.WebMVC.Models.Entity
 {
-    public class AnalyzeUpdateVM
+    public class AnalyzeInsertVM
     {
-        public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Analizin başlama tarihi belirtilmelidir")]
         public DateOnly StartDate { get; set; }
@@ -24,6 +23,3 @@ namespace AnalysisManagement.WebMVC.Models
     }
 
 }
-
-
-

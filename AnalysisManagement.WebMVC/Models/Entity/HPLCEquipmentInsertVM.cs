@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AnalysisManagement.WebMVC.Models
+namespace AnalysisManagement.WebMVC.Models.Entity
 {
-    public class HPLCEquipmentUpdateVM
+    public class HPLCEquipmentInsertVM
     {
-        public int HPLCEquipmentId { get; set; }
+
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ekipman markası boş bırakılamaz")]
         public string Brand { get; set; }

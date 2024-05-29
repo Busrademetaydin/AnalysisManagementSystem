@@ -1,6 +1,6 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Entities.Concrete;
-using AnalysisManagement.WebMVC.Models;
+using AnalysisManagement.WebMVC.Models.Entity;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
+
+    [Authorize]
 
     public class DrugController : Controller
     {
@@ -28,7 +30,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> InsertAsync()
         {
             DrugInsertVM drug = new();
@@ -36,6 +38,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> InsertAsync(DrugInsertVM drug)
         {
             if (ModelState.IsValid)

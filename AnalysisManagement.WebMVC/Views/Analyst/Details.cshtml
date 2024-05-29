@@ -1,4 +1,4 @@
-﻿@model Analyst
+﻿@model Analysis.Entities.Concrete.Analyst
 
 
 @{
@@ -26,7 +26,25 @@
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
+            @if (Model != null)
+            {
+                if (Model.Gender == true)
+                {
+                    @:Female
+                }
+                else if (Model.Gender == false)
+                {
+                    @:Male
+                }
+                else
+                {
+                    @:Unknown
+                }
+            }
+            else
+            {
+                @:Unknown
+            }
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)

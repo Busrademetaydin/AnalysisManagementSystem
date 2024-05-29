@@ -1,12 +1,15 @@
 ﻿using Analysis.Business.Abstract;
 using Analysis.Entities.Concrete;
-using AnalysisManagement.WebMVC.Models;
+using AnalysisManagement.WebMVC.Models.Entity;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnalysisManagement.WebMVC.Controllers
 {
+
+    [Authorize]
     public class AnalyzeController : Controller
     {
         private readonly IAnalysisManager manager;
@@ -23,7 +26,7 @@ namespace AnalysisManagement.WebMVC.Controllers
 
 
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             var result = manager.GetAllAsync().Result;

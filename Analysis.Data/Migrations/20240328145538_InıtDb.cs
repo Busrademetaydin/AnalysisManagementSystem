@@ -141,7 +141,7 @@ namespace Analysis.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AnalyzeId = table.Column<int>(type: "int", nullable: false),
                     DrugId = table.Column<int>(type: "int", nullable: false),
-                    Limit = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    Limit = table.Column<int>(type: "double", maxLength: 50, nullable: false),
                     Result = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),

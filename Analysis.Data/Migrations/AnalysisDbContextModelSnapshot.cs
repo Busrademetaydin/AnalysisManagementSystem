@@ -167,9 +167,9 @@ namespace Analysis.Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Limit")
+                    b.Property<double>("Limit")
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("double");
 
                     b.Property<string>("Result")
                         .IsRequired()

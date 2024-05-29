@@ -34,6 +34,7 @@ namespace Analysis.Data.AppDbContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=.;Database=AnalysisManagement;Trusted_Connection=true;Trust server Certificate=true;MultipleActiveResultSets=True");
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

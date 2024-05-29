@@ -1,5 +1,5 @@
 ﻿using Analysis.Entities.Concrete;
-using AnalysisManagement.WebMVC.Models;
+using AnalysisManagement.WebMVC.Models.Entity;
 using AutoMapper;
 
 namespace AnalysisManagement.WebMVC.AutoMapperProfile
@@ -16,6 +16,13 @@ namespace AnalysisManagement.WebMVC.AutoMapperProfile
             CreateMap<AnalyzeUpdateVM, Analyze>().ReverseMap();
             CreateMap<AnalystInsertVM, Analyst>().ReverseMap();
             CreateMap<AnalystUpdateVM, Analyst>().ReverseMap();
+            CreateMap<AnalyzeDetailInsertVM, AnalyzeDetail>().ReverseMap();
+            CreateMap<AnalyzeDetailUpdateVM, AnalyzeDetail>().ReverseMap();
+            CreateMap<AnalyzeDetailInsertVM, Analyze>().ReverseMap();
+            CreateMap<AnalyzeDetailUpdateVM, Analyze>().ReverseMap();
+            CreateMap<Analyze, AnalyzeDetail>();
+            CreateMap<AnalyzeTypeInsertVM, AnalyzeType>().ReverseMap();
+            CreateMap<AnalyzeTypeUpdateVM, AnalyzeType>().ReverseMap();
         }
     }
 }

@@ -48,13 +48,14 @@ namespace AnalysisManagement.WebMVC.Controllers
             }
 
             var result = await signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
-
+            var reult2 = await userManager.AddToRoleAsync(user, "admin");
             if (result.Succeeded)
             {
                 var roles = await userManager.GetRolesAsync(user);
                 if (roles.Contains("Admin"))
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    //return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    return RedirectToAction("Index", "Drug");
                 }
                 else
                 {
@@ -99,7 +100,7 @@ namespace AnalysisManagement.WebMVC.Controllers
             else
             {
                 await signInManager.SignInAsync(appUser, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
             var code = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
             StringBuilder message = new();
@@ -131,38 +132,6 @@ namespace AnalysisManagement.WebMVC.Controllers
                 ModelState.AddModelError("", "An error occurred while sending an e-mail.");
                 return View(registerVM);
             }
-
-
-
-
-            string[] rolesToCreate = { "Admin", "Editor" };
-
-            foreach (var roleName in rolesToCreate)
-            {
-                if (await roleManager.FindByNameAsync(roleName) == null)
-                {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
-                }
-            }
-
-
-
-            if (await roleManager.FindByNameAsync("Analyst") == null)
-            {
-                IdentityRole role = new IdentityRole();
-                role.Name = "Analyst";
-                roleManager.CreateAsync(role);
-            }
-
-            var result2 = await userManager.AddToRoleAsync(appUser, "Analyst");
-
-            if (result2.Succeeded)
-            {
-                return RedirectToAction("Index", "Drug");
-            }
-            return View(registerVM);
-
-
         }
 
         [Route("ConfirmEmail")]

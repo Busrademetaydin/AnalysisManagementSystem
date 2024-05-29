@@ -4,6 +4,7 @@ using Analysis.Business.Concrete;
 using Analysis.Data.AppDbContext;
 using Analysis.Entities.Concrete;
 using AnalysisManagement.WebMVC.AutoMapperProfile;
+using AnalysisManagement.WebMVC.Extensions;
 using AnalysisManagement.WebMVC.Models;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
@@ -18,7 +19,7 @@ namespace AnalysisManagement.WebMVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                             .WriteTo.Console()
@@ -39,6 +40,8 @@ namespace AnalysisManagement.WebMVC
                 (builder.Configuration.GetConnectionString("AnalysisManagement")));
 
                 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+
+
 
                 builder.Services.AddScoped<IHPLCEquipmentManager, HPLCEquipmentManager>();
                 builder.Services.AddScoped<IDrugManager, DrugManager>();
@@ -81,6 +84,7 @@ namespace AnalysisManagement.WebMVC
                 }).AddEntityFrameworkStores<AnalysisDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
 
+                builder.Services.AddCookieAyarlar();
 
                 builder.Services.AddNotyf(config =>
                 {
@@ -88,6 +92,10 @@ namespace AnalysisManagement.WebMVC
                     config.IsDismissable = true;
                     config.Position = NotyfPosition.BottomRight;
                 });
+
+
+
+
 
                 var app = builder.Build();
 
@@ -119,6 +127,19 @@ namespace AnalysisManagement.WebMVC
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");
                 });
+
+                using (var scope = app.Services.CreateScope())
+                {
+                    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                    var roles = new[] { "Admin" };
+                    foreach (var role in roles)
+                    {
+                        if (!await roleManager.RoleExistsAsync(role))
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+
+                }
 
 
                 app.Run();

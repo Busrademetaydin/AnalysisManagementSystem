@@ -25,14 +25,14 @@ namespace Analysis.Business.Concrete
             if (entity.IdentificationNumber.Length != 11)
             {
 
-                throw new Exception("11 karaktere sahip unique bir kimlik numarası giriniz.");
+                throw new Exception("Enter a unique identification number with 11 characters.");
 
             }
 
-            if (!IsValidEmail(entity.Email) || !IsValidIDNo(entity.IdentificationNumber))
+            if (IsValidEmail(entity.Email) || IsValidIDNo(entity.IdentificationNumber))
             {
 
-                throw new Exception("Bu email adresi veya kimlik numarası zaten kullanımda.");
+                throw new Exception("This email address or ID number is already in use.");
             }
 
             return await base.InsertAsync(entity);

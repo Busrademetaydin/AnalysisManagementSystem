@@ -1,0 +1,177 @@
+﻿@model AnalyzeDetailInsertVM
+
+
+<h3>To insert a new analyze detail, fill out the information below.</h3>
+
+<div class="card">
+<div class="card-body">
+
+    <form action="Insert" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-2">
+                <label asp-for="AnalyzeId" class="form-label">Analyze Id</label>
+                <input asp-for="AnalyzeId" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="AnalyzeId"></span></div>
+
+            </div>
+            <div class="mb-2">
+                <label asp-for="DrugId" class="form-label">Drug Id</label>
+                <input asp-for="DrugId" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="DrugId"></span></div>
+            </div>
+         
+            <div class="mb-2">
+                <label asp-for="AnalyzeType" class="form-label">Analyze Type</label>
+                <select asp-for="AnalyzeType" class="form-select" id="analysisType" required>
+                    <option value="">Select Analyze Type</option>
+                    <option value="assay">Assay</option>
+                    <option value="dissolution">Dissolution</option>
+                    <option value="impurity">Impurity</option>
+                    <option value="enantiomer">Enantiomer</option>
+                </select>
+                <div class="text-danger"> <span asp-validation-for="AnalyzeType"></span></div>
+            </div>
+
+
+            <div class="mb-2">
+                <label asp-for="Limit" class="form-label">Limit</label>
+                <input asp-for="Limit" class="form-control">
+                <div class="text-danger"> <span asp-validation-for="Limit"></span></div>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Result" class="form-label">Result</label>
+                <input asp-for="Result" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="Result"></span></div>
+        </div>
+
+        <div class="mb-2">
+                <label asp-for="Comments" class="form-label">Comments</label>
+                <input asp-for="Comments" class="form-control" type="text">
+                <div class="text-danger"> <span asp-validation-for="Comments"></span></div>
+         </div>
+         
+        <div class="mb-3">
+                <button class="btn btn-success" type="submit">Save</button>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        // $(document).ready(function () {
+        //     $('#analysisType').change(function () {
+        //         var selectedType = $(this).val();
+        //         var limitInput = $('#Limit');
+
+        //         // Analiz türüne göre limitin geçerliliğini kontrol et
+        //         switch (selectedType.toLowerCase()) {
+        //             case 'assay':
+        //                 limitInput.attr('min', 0.95);
+        //                 limitInput.attr('max', 1.05);
+        //                 break;
+        //             case 'dissolution':
+        //                 limitInput.attr('min', 0);
+        //                 limitInput.attr('max', 1);
+        //                 break;
+        //             case 'impurity':
+        //             case 'enantiomer':
+        //                 limitInput.attr('min', 0);
+        //                 limitInput.attr('max', 0.0015);
+        //                 break;
+        //             default:
+        //                 // Geçersiz analiz türü seçildiğinde limit alanını sıfırla
+        //                 limitInput.val('');
+        //                 limitInput.removeAttr('min');
+        //                 limitInput.removeAttr('max');
+        //                 return;
+        //         }
+        //     });
+        // });
+        $(document).ready(function () {
+            $('#analysisType').change(function () {
+                var selectedType = $(this).val();
+                var limitInput = $('#Limit');
+
+                // Analiz türüne göre limitin geçerliliğini kontrol et
+                switch (selectedType.toLowerCase()) {
+                    case 'assay':
+                        limitInput.attr('min', 0.95);
+                        limitInput.attr('max', 1.05);
+                        break;
+                    case 'dissolution':
+                        limitInput.attr('min', 0);
+                        limitInput.attr('max', 1);
+                        break;
+                    case 'impurity':
+                    case 'enantiomer':
+                        limitInput.attr('min', 0);
+                        limitInput.attr('max', 0.0015);
+                        break;
+                    default:
+                        // Geçersiz analiz türü seçildiğinde limit alanını sıfırla
+                        limitInput.val('');
+                        limitInput.removeAttr('min');
+                        limitInput.removeAttr('max');
+                        return;
+                }
+            });
+
+            // Form submit olduğunda kontrol yap
+            $('form').submit(function (event) {
+                var limitInput = $('#Limit');
+                var limitValue = parseFloat(limitInput.val());
+
+                // Limit değerinin 0 veya daha büyük olduğunu kontrol et
+                if (limitValue < 0) {
+                    // Eğer limit değeri negatifse formun gönderilmesini engelle
+                    event.preventDefault();
+                    // Kullanıcıya uygun bir hata mesajı göster
+                    alert("Limit değeri sıfır veya daha büyük olmalıdır.");
+                    // Limit alanını sıfırla veya isteğe bağlı olarak düzelt
+                    limitInput.val(0);
+                }
+            });
+        });
+        $(document).ready(function () {
+            // Form submit olduğunda kontrol yap
+            $('form').submit(function (event) {
+                // Analiz id ve drug id inputlarını seç
+                var analyzeIdInput = $('#AnalyzeId');
+                var drugIdInput = $('#DrugId');
+
+                // Değerlerini al
+                var analyzeId = parseInt(analyzeIdInput.val());
+                var drugId = parseInt(drugIdInput.val());
+
+                // Analiz id ve drug id değerlerinin 0 veya daha büyük olduğunu kontrol et
+                if (analyzeId < 0 || drugId < 0) {
+                    // Eğer biri veya her ikisi de negatifse formun gönderilmesini engelle
+                    event.preventDefault();
+                    // Kullanıcıya uygun bir hata mesajı göster
+                    alert("Analiz ID ve İlaç ID değerleri sıfır veya daha büyük olmalıdır.");
+                    // Değerleri sıfırla veya isteğe bağlı olarak düzelt
+                    analyzeIdInput.val(0);
+                    drugIdInput.val(0);
+                }
+            });
+        });
+
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+}
+
+
+

@@ -34,18 +34,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                       
+                        
                     
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            var user = await UserManager.GetUserAsync(User);
-                            var isAdmin = await UserManager.IsInRoleAsync(user, "Admin");
-                            var isAnalyst = await UserManager.IsInRoleAsync(user, "Analyst");
-
-                            if (isAdmin)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
+                                
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Drug" asp-action="Index">Drugs</a>
                                 </li>
@@ -64,20 +57,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
                                 </li>
-                            }
-                            else if (isAnalyst)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Analyze" asp-action="Index">Analyzes</a>
-                                </li>
-                               
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="AnalyzeDetail" asp-action="Index">Analyze Details</a>
-                                </li>
-                            }
+                        }
                             else
                             {
                                 <li class="nav-item">
@@ -93,9 +73,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                                 </li>
                             }
-                        }
-                       
-
+      
                     </ul>
                     </div>
                     <div class="nav-item">

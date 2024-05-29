@@ -11,7 +11,7 @@ namespace Analysis.Entities.Concrete
         [Display(Name = "Drug Id")]
         public int DrugId { get; set; }
 
-        public int Limit { get; set; }
+        public double Limit { get; set; }
 
         public string Result { get; set; }
 

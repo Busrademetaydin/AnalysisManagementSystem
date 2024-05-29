@@ -15,11 +15,11 @@ namespace Analysis.Business.Concrete
             }
             if (IsCalibrationValid(equipment.CalibrationDueDate))
             {
-                Console.WriteLine("Analiz yapılabilir.Bu cihazın kalibrasyonu geçerli.");
+                Console.WriteLine("Analysis can be done. The calibration of this device is valid.");
                 return true;
             }
             else
-                Console.WriteLine("Analiz yapılamaz. Bu cihazın kalibrasyon geçerlilik tarihinin süresi dolmuş.");
+                Console.WriteLine("Analysis cannot be done. This device's calibration validity period has expired.");
             return false;
 
 
@@ -30,7 +30,14 @@ namespace Analysis.Business.Concrete
             return base.InsertAsync(entity);
         }
 
+        public Task InsertAsync(AnalyzeDetail analysisDetail)
+        {
+            throw new NotImplementedException();
+        }
 
-
+        public void UpdateAsync(AnalyzeDetail update)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
