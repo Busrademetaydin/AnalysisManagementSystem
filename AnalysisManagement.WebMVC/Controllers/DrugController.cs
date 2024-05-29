@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AnalysisManagement.WebMVC.Controllers
 {
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
 
     public class DrugController : Controller
     {
@@ -38,7 +38,7 @@ namespace AnalysisManagement.WebMVC.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> InsertAsync(DrugInsertVM drug)
         {
             if (ModelState.IsValid)

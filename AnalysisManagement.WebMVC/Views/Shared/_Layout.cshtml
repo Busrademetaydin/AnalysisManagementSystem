@@ -36,7 +36,7 @@
                       
                         
                     
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                                 
                                 <li class="nav-item">
@@ -56,9 +56,10 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Analyst" asp-action="Index">Analysts</a>
-                                </li>
+                            </li>
                         }
-                            else
+                        
+                        else
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>

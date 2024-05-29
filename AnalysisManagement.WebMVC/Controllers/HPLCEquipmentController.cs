@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AnalysisManagement.WebMVC.Controllers
 {
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class HPLCEquipmentController : Controller
     {
         private readonly IHPLCEquipmentManager manager;

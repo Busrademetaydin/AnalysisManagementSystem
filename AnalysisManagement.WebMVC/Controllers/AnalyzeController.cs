@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AnalysisManagement.WebMVC.Controllers
 {
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AnalyzeController : Controller
     {
         private readonly IAnalysisManager manager;
