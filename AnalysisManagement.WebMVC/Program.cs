@@ -132,7 +132,7 @@ namespace AnalysisManagement.WebMVC
                 {
                     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    var roles = new[] { "Admin" };
+                    var roles = new[] { "Admin", "User" };
                     foreach (var role in roles)
                     {
                         if (!await roleManager.RoleExistsAsync(role))
